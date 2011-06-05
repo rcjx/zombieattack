@@ -41,6 +41,7 @@ Enemy::Enemy(int x, int y) : Entity(80, 5) {
   height = avatar.GetSize().y;
 
   speed *= 0.5;
+  facingRight = true;
 }
 
 Enemy::~Enemy() {
