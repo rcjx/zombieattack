@@ -83,7 +83,7 @@ int main(int argc, char** argv)
     App.Draw(Rect);
     App.Draw(player.getSprite());
     App.Draw(thing.getSprite());
-    for (uint i = 0; i < enemies.size(); ++i)  {
+    for (unsigned int i = 0; i < enemies.size(); ++i)  {
       enemies[i]->aggro(player, ElapsedTime);
       App.Draw(enemies[i]->getSprite());
     }
