@@ -4,14 +4,14 @@
 
 Enemy::Enemy() : Entity(80, 5) {
 
-  if (!pic.LoadFromFile("../resources/sprites/zombie.png")) {
+  if (!pic.LoadFromFile("../resources/sprites/ZombieFront.jpg")) {
     std::cout << "Error loading image" << std::endl;
     exit(EXIT_SUCCESS);
   }
 
   avatar.SetImage(pic);
-  avatar.SetColor(sf::Color(255, 255, 255, 255));
-  // avatar.Resize(pic.GetWidth(), pic.GetHeight());
+  avatar.SetColor(sf::Color(0, 0, 0));
+  avatar.Resize(200, 200);
   avatar.SetPosition(0, 0); 
 
 
@@ -25,15 +25,16 @@ Enemy::Enemy() : Entity(80, 5) {
 
 Enemy::Enemy(int x, int y) : Entity(80, 5) {
 
-  if (!pic.LoadFromFile("../resources/sprites/zombie.png")) {
+  if (!pic.LoadFromFile("../resources/sprites/JoeFront.jpg")) {
     std::cout << "Error loading image" << std::endl;
     exit(EXIT_SUCCESS);
   }
 
+  pic.CreateMaskFromColor(sf::Color(255, 255, 255));
   avatar.SetImage(pic);
-  sf::IntRect Rect(100, 14, 161, 80);
-  avatar.SetSubRect(Rect);
-  avatar.SetColor(sf::Color(255, 255, 255, 255));
+  //sf::IntRect Rect(100, 14, 161, 80);
+  //avatar.SetSubRect(Rect);
+  avatar.SetColor(sf::Color(255, 255, 255));
   // avatar.Resize(pic.GetWidth(), pic.GetHeight());
   avatar.SetPosition(x, y); 
 

@@ -5,13 +5,14 @@
 
 Object::Object() {
     
-  if (!pic.LoadFromFile("../resources/sprites/object.png")) {
+  if (!pic.LoadFromFile("../resources/sprites/JoeFront.jpg")) {
     std::cout << "Error loading image" << std::endl;
     exit(EXIT_FAILURE);
   }
 
+  pic.CreateMaskFromColor(sf::Color(255, 255, 255));
   avatar.SetImage(pic);
-  avatar.SetColor(sf::Color(255, 255, 255, 255));
+  avatar.SetColor(sf::Color(255, 255, 255));
   avatar.SetPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + std::rand()%100);
 
   // Get the sprite's dimensions
@@ -92,12 +93,12 @@ bool Object::collisionDetected(std::vector<Object*> objects) {
       subject_top = objects[i]->getSprite().GetPosition().y;
       subject_bottom = subject_top + objects[i]->getSprite().GetSize().y;
 
-      if ((bottom <= subject_top) or (top >= subject_bottom) or (right <= subject_left) or (left >= subject_right))
+      if ((bottom < subject_top) or (top > subject_bottom) or (right < subject_left) or (left > subject_right))
 	continue;
       else
 	return true;
     }    
-  }
+  } 
   return false;
 
 }
