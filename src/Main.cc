@@ -7,9 +7,6 @@
 #include "Enemy.h"
 #include "Player.h"
 
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
-
 int main(int argc, char** argv)
 {
 
@@ -27,13 +24,16 @@ int main(int argc, char** argv)
 					SCREEN_HEIGHT - 50,
 					sf::Color(255, 255, 255, 0), 3, sf::Color(0, 0, 0));
 
-  Player player;
-  Object thing;
-  std::vector<Enemy*> enemies;
-  enemies.push_back(new Enemy(SCREEN_WIDTH - 10, SCREEN_HEIGHT - 10));
-  enemies.push_back(new Enemy(10, 10));
-  enemies.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
-  enemies.push_back(new Enemy(10, SCREEN_HEIGHT - 10));		    
+  Player *player = new Player; 
+  //Object *thing = new Object;
+  std::vector<Object*> objects;
+  objects.push_back(player);
+  //objects.push_back(thing);
+  //objects.push_back(new Enemy(SCREEN_WIDTH - 10, SCREEN_HEIGHT - 10));
+  objects.push_back(new Enemy(10, 10));
+  //objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
+  //objects.push_back(new Enemy(10, SCREEN_HEIGHT - 10));
+
 
   // Start game loop
   while (App.IsOpened()) {    
@@ -62,13 +62,13 @@ int main(int argc, char** argv)
 
     // Move the sprite
     if (App.GetInput().IsKeyDown(sf::Key::Left))
-      player.move(LEFT, ElapsedTime);
+      player->move(LEFT, ElapsedTime, objects);
     if (App.GetInput().IsKeyDown(sf::Key::Right))
-      player.move(RIGHT, ElapsedTime);
+      player->move(RIGHT, ElapsedTime, objects);
     if (App.GetInput().IsKeyDown(sf::Key::Up))
-      player.move(UP, ElapsedTime);
+      player->move(UP, ElapsedTime, objects);
     if (App.GetInput().IsKeyDown(sf::Key::Down))
-      player.move(DOWN, ElapsedTime);
+      player->move(DOWN, ElapsedTime, objects);
 
     // // Rotate the sprite
     // if (App.GetInput().IsKeyDown(sf::Key::Add))
@@ -76,18 +76,18 @@ int main(int argc, char** argv)
     // if (App.GetInput().IsKeyDown(sf::Key::Subtract))
     //   Sprite.Rotate( 100 * ElapsedTime);
 
-    thing.move(LEFT, ElapsedTime);   
-
+    //thing->move(LEFT, ElapsedTime, objects);   
+      
     // Clear the screen (fill it w/white color)
     App.Clear(sf::Color(255, 255, 255));
     App.Draw(Rect);
-    App.Draw(player.getSprite());
-    App.Draw(thing.getSprite());
-    for (unsigned int i = 0; i < enemies.size(); ++i)  {
-      enemies[i]->aggro(player, ElapsedTime);
-      App.Draw(enemies[i]->getSprite());
+    App.Draw(player->getSprite());
+    for (unsigned int i = 0; i < objects.size(); ++i)  {
+      objects[i]->aggro(*player, ElapsedTime, objects);
+      App.Draw(objects[i]->getSprite());
     }
-    // Diplay window contents on screen
+    // Diplay window contents on screen   
+
     App.Display();
 
   }

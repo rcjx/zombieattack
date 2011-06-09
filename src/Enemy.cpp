@@ -31,6 +31,8 @@ Enemy::Enemy(int x, int y) : Entity(80, 5) {
   }
 
   avatar.SetImage(pic);
+  sf::IntRect Rect(100, 14, 161, 80);
+  avatar.SetSubRect(Rect);
   avatar.SetColor(sf::Color(255, 255, 255, 255));
   // avatar.Resize(pic.GetWidth(), pic.GetHeight());
   avatar.SetPosition(x, y); 
@@ -48,28 +50,28 @@ Enemy::~Enemy() {
   delete this;
 }
 
-void Enemy::aggro(Object &target, float ElapsedTime) {
+void Enemy::aggro(Object &target, float ElapsedTime,
+		  std::vector<Object*> objects) {
 
   if (avatar.GetPosition().x < target.getSprite().GetPosition().x) {
-    move(RIGHT, ElapsedTime);
+    move(RIGHT, ElapsedTime, objects);
     if (!facingRight) {
-      std::cout << "should be flipping" << std::endl;
       avatar.FlipX(false);
       facingRight = true;
     }
   }
   else if (avatar.GetPosition().x > target.getSprite().GetPosition().x) {
-    move(LEFT, ElapsedTime);
+    move(LEFT, ElapsedTime, objects);
     if (facingRight) {      
       avatar.FlipX(true);
       facingRight = false;
     }
   }
   if (avatar.GetPosition().y > target.getSprite().GetPosition().y) {
-    move(UP, ElapsedTime);
+    move(UP, ElapsedTime, objects);
   }
   else if (avatar.GetPosition().y < target.getSprite().GetPosition().y)
-    move(DOWN, ElapsedTime);
+    move(DOWN, ElapsedTime, objects);
 
 }
 

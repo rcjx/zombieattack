@@ -12,7 +12,7 @@ SHELL = /bin/sh
 zombie.bin : $(OBJS)
 	$(CC) $(LFLAGS) $(OBJS) -o zombie.bin
 
-Object.o : Object.cpp
+Object.o : Object.cpp 
 	$(CC) $(CFLAGS) Object.cpp
 
 Entity.o : Entity.cpp 
