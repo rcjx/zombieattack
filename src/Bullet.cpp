@@ -2,7 +2,7 @@
 
 Bullet::Bullet(sf::Sprite adjusted_sprite) {
   avatar = adjusted_sprite;
-  speed *= 10;
+  speed *= 0.1;
 }
 
 Bullet::~Bullet() {
@@ -44,4 +44,38 @@ void Bullet::move(float ElapsedTime, std::vector<Object*> objects) {
     }
     else _y += -velocity;
   }
+}
+
+
+bool Bullet::collisionDetected(std::vector<Object*> objects) {
+
+	std::cout << "Bullet fired" << std::endl;
+
+
+
+  int left, subject_left;
+  int right, subject_right;
+  int top, subject_top;
+  int bottom, subject_bottom;
+
+  left = _x;
+  right = left + this->getSprite().GetSize().x;
+  top = _y;
+  bottom = top + this->getSprite().GetSize().y;
+
+  for (unsigned int i = 1; i < objects.size(); i++) {
+    if (this != objects[i]) {
+      subject_left = objects[i]->getSprite().GetPosition().x;
+      subject_right = subject_left + objects[i]->getSprite().GetSize().x;
+      subject_top = objects[i]->getSprite().GetPosition().y;
+      subject_bottom = subject_top + objects[i]->getSprite().GetSize().y;
+
+      if ((bottom < subject_top) || (top >= subject_bottom) || (right < subject_left) || (left >= subject_right))
+	continue;
+      else
+	return true;
+    }    
+  } 
+  return false;
+
 }

@@ -86,7 +86,7 @@ Object::Object() {
 }
 
 Object::~Object() {
-  delete this;
+	std::cout << "O destructed" << std::endl;
 }
 
 void Object::move(Direction d, float ElapsedTime,
