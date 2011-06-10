@@ -20,9 +20,10 @@ int main(int argc, char** argv)
   
   bgm.Play();
 
-  sf::Shape Rect = sf::Shape::Rectangle(50, 50, SCREEN_WIDTH - 50,
-					SCREEN_HEIGHT - 50,
-					sf::Color(255, 255, 255, 0), 3, sf::Color(0, 0, 0));
+  // sf::Shape Rect = sf::Shape::Rectangle(50, 50, SCREEN_WIDTH - 50,
+  // 					SCREEN_HEIGHT - 50,
+  // 					sf::Color(255, 255, 255, 0), 3,
+  // 					sf::Color(0, 0, 0));
 
   Player *player = new Player; 
   //Object *thing = new Object;
@@ -32,7 +33,11 @@ int main(int argc, char** argv)
   //objects.push_back(new Enemy(SCREEN_WIDTH - 10, SCREEN_HEIGHT - 10));
   objects.push_back(new Enemy(10, 10));
   //objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
-  //objects.push_back(new Enemy(10, SCREEN_HEIGHT - 10));
+  // objects.push_back(new Enemy(10, SCREEN_HEIGHT - 10));
+  // objects.push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 10));
+  // objects.push_back(new Enemy(100, 10));
+  // objects.push_back(new Enemy(SCREEN_WIDTH - 100, 10));
+  // objects.push_back(new Enemy(100, SCREEN_HEIGHT - 10));
 
 
   // Start game loop
@@ -70,24 +75,34 @@ int main(int argc, char** argv)
     if (App.GetInput().IsKeyDown(sf::Key::Down))
       player->move(DOWN, ElapsedTime, objects);
 
-    // // Rotate the sprite
-    // if (App.GetInput().IsKeyDown(sf::Key::Add))
-    //   Sprite.Rotate(-100 * ElapsedTime);
-    // if (App.GetInput().IsKeyDown(sf::Key::Subtract))
-    //   Sprite.Rotate( 100 * ElapsedTime);
+    if (App.GetInput().IsKeyDown(sf::Key::Space))
+      player->shoot();
 
     //thing->move(LEFT, ElapsedTime, objects);   
       
     // Clear the screen (fill it w/white color)
     App.Clear(sf::Color(255, 255, 255));
-    App.Draw(Rect);
+    // App.Draw(Rect);
     App.Draw(player->getSprite());
     for (unsigned int i = 0; i < objects.size(); ++i)  {
       objects[i]->aggro(*player, ElapsedTime, objects);
       App.Draw(objects[i]->getSprite());
     }
-    // Diplay window contents on screen   
 
+
+    for (unsigned int i = 0; i < player->getBullets().size(); ++i) {
+      App.Draw(player->getBullets()[i]->getSprite());      
+      player->getBullets()[i]->move(ElapsedTime, objects);
+      if (player->getBullets()[i]->collisionDetected(objects)) {
+	std::cout << i << std::endl;
+	//delete player->getBullets()[i];
+	//player->getBullets()[i] = NULL;
+	//player->getBullets().erase(player->getBullets().begin() + i);
+      }
+    }
+    // if (player->tmp)
+    //   App.Draw(player->tmp->getSprite());
+    // Diplay window contents on screen   
     App.Display();
 
   }

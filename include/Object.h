@@ -22,18 +22,27 @@ class Object {
   void move(Direction d, float ElapsedTime, std::vector<Object*> objects);
   sf::Sprite getSprite();
   virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects)
-		     { 	std::cout << "object" << std::endl; }
- 
+		     { 	 }
+  Direction getFacing();
+  void setFacing(Direction d);
+  bool collisionDetected(std::vector<Object*> objects);
+  
   protected:
-  sf::Image pic;
+  sf::Image up[3];
+  sf::Image down[3];
+  sf::Image left[3];
+  sf::Image right[3];
   sf::Sprite avatar;
   int _x;
   int _y;
   int speed;
   int width;
   int height;
+  int frame;
+  int frame_buffer;
   bool facingRight;
-		     bool collisionDetected(std::vector<Object*> objects);
+  Direction facing;
+
 };
 
 #endif

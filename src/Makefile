@@ -1,4 +1,4 @@
-OBJS = Object.o Entity.o Enemy.o Player.o Main.o
+OBJS = Object.o Bullet.o Entity.o Enemy.o Player.o Main.o
 CC = g++
 DEBUG = -g
 CFLAGS = -Wall -c $(DEBUG) -lsfml-audio -lsfml-graphics -lsfml-system -I../include
@@ -14,6 +14,9 @@ zombie.bin : $(OBJS)
 
 Object.o : Object.cpp 
 	$(CC) $(CFLAGS) Object.cpp
+
+Bullet.o : Bullet.cpp 
+	$(CC) $(CFLAGS) Bullet.cpp
 
 Entity.o : Entity.cpp 
 	$(CC) $(CFLAGS) Entity.cpp

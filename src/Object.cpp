@@ -5,14 +5,69 @@
 
 Object::Object() {
     
-  if (!pic.LoadFromFile("../resources/sprites/JoeFront.jpg")) {
+  if (!down[0].LoadFromFile("../resources/sprites/JoeDown.jpg")) {
     std::cout << "Error loading image" << std::endl;
     exit(EXIT_FAILURE);
   }
 
-  pic.CreateMaskFromColor(sf::Color(255, 255, 255));
-  avatar.SetImage(pic);
-  avatar.SetColor(sf::Color(255, 255, 255));
+  if (!down[1].LoadFromFile("../resources/sprites/JoeDownWalk1.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!down[2].LoadFromFile("../resources/sprites/JoeDownWalk2.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!up[0].LoadFromFile("../resources/sprites/JoeUp.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!up[1].LoadFromFile("../resources/sprites/JoeUpWalk1.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!up[2].LoadFromFile("../resources/sprites/JoeUpWalk2.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!right[0].LoadFromFile("../resources/sprites/JoeRight.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!right[1].LoadFromFile("../resources/sprites/JoeRightWalk1.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!right[2].LoadFromFile("../resources/sprites/JoeRightWalk2.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!left[0].LoadFromFile("../resources/sprites/JoeLeft.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!left[1].LoadFromFile("../resources/sprites/JoeLeftWalk1.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (!left[2].LoadFromFile("../resources/sprites/JoeLeftWalk2.jpg")) {
+    std::cout << "Error loading image" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  down[0].CreateMaskFromColor(sf::Color(255, 255, 255));
+  avatar.SetImage(down[0]);
+  avatar.SetColor(sf::Color(255, 255, 255, 255));
   avatar.SetPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + std::rand()%100);
 
   // Get the sprite's dimensions
@@ -25,7 +80,9 @@ Object::Object() {
   // Flip the sprite on X and Y axis
   // avatar.FlipX(true);
   // Sprite.FlipY(true);
-  speed = 100;
+  speed = 75;
+  frame = 0;
+  frame_buffer = 0;
 }
 
 Object::~Object() {
@@ -40,14 +97,29 @@ void Object::move(Direction d, float ElapsedTime,
   
   float velocity = speed * ElapsedTime;
 
+  frame_buffer++;
+  // std::cout << frame_buffer << ", " << frame << std::endl;
+  if (frame_buffer%10 == 0) {
+    frame++;
+    //std::cout << frame_buffer << ", " << frame << std::endl;
+    frame_buffer = 0;
+  }
+
+  if (frame == 3)
+    frame = 0;      
+
   if (d == LEFT) {
+    avatar.SetImage(left[frame]);
+    facing = LEFT;
     _x += -velocity;
     if (_x > 0 and !collisionDetected(objects)) {
     avatar.Move(-velocity, 0);
     }
     else _x += velocity;
   }
-  else if (d == RIGHT) {
+  else if (d == RIGHT) {    
+    avatar.SetImage(right[frame]);
+    facing = RIGHT;
     _x += velocity;
     if (_x + width < SCREEN_WIDTH and !collisionDetected(objects)) {
     avatar.Move(velocity, 0);
@@ -55,6 +127,8 @@ void Object::move(Direction d, float ElapsedTime,
     else _x += -velocity;
   }
   else if (d == UP) {
+    avatar.SetImage(up[frame]);
+    facing = UP;
     _y += -velocity;
     if (_y > 0 and !collisionDetected(objects)) {
     avatar.Move(0, -velocity);    
@@ -62,6 +136,8 @@ void Object::move(Direction d, float ElapsedTime,
     else _y += velocity;
   }
   else if (d == DOWN) {
+    avatar.SetImage(down[frame]);
+    facing = DOWN;
     _y += velocity;
     if (_y + height < SCREEN_HEIGHT and !collisionDetected(objects)) {
     avatar.Move(0, velocity);
@@ -72,6 +148,14 @@ void Object::move(Direction d, float ElapsedTime,
 
 sf::Sprite Object::getSprite() {
   return avatar;
+}
+
+Direction Object::getFacing() {
+  return facing;
+}
+
+void Object::setFacing(Direction d) {
+  facing = d;
 }
 
 bool Object::collisionDetected(std::vector<Object*> objects) {
@@ -93,7 +177,7 @@ bool Object::collisionDetected(std::vector<Object*> objects) {
       subject_top = objects[i]->getSprite().GetPosition().y;
       subject_bottom = subject_top + objects[i]->getSprite().GetSize().y;
 
-      if ((bottom < subject_top) or (top > subject_bottom) or (right < subject_left) or (left > subject_right))
+      if ((bottom < subject_top) or (top >= subject_bottom) or (right < subject_left) or (left >= subject_right))
 	continue;
       else
 	return true;
