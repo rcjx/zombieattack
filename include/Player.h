@@ -12,13 +12,16 @@ class Player : public Entity {
   Player();
   ~Player();
   void shoot();
+
   std::vector<Bullet*> getBullets();
   
+  std::vector<Bullet*> bullets;
+
  private:
   int inventory;
   sf::Image bullet_pic;
   sf::Sprite bullet_sprite;
-  std::vector<Bullet*> bullets;  
+  //std::vector<Bullet*> bullets;  
 };
 
 #endif

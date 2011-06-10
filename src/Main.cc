@@ -12,6 +12,8 @@ int main(int argc, char** argv)
 
   sf::RenderWindow App(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Zombie Attack");
 
+  /* ROL */ App.SetFramerateLimit(60);
+
   sf::Music bgm;    
   if (!bgm.OpenFromFile("../resources/music/cry_of_the_planet.ogg")) {
     std::cout << "Error loading music" << std::endl; 
@@ -89,17 +91,42 @@ int main(int argc, char** argv)
       App.Draw(objects[i]->getSprite());
     }
 
+	for(unsigned int i = 0; i < player->bullets.size(); ++i)
+	{
+		App.Draw(player->bullets[i]->getSprite());
+		player->bullets[i]->move(ElapsedTime, objects);
 
+		if(player->bullets[i]->collisionDetected(objects))
+		{
+		    std::cout << i << " size: " << player->bullets.size() << std::endl;
+			
+			delete player->bullets[i];
+
+			//delete player->bullets[i];
+			//player->bullets[i] = NULL;
+			player->bullets.erase(player->bullets.begin() + i);
+		}
+	}
+
+	/*
     for (unsigned int i = 0; i < player->getBullets().size(); ++i) {
       App.Draw(player->getBullets()[i]->getSprite());      
       player->getBullets()[i]->move(ElapsedTime, objects);
       if (player->getBullets()[i]->collisionDetected(objects)) {
-	std::cout << i << std::endl;
+		  std::cout << i << " size: " << player->getBullets().size() << std::endl;
+
+	    //delete player->getBullets()[i];
+		  player->getBullets().pop_back();
+
 	//delete player->getBullets()[i];
 	//player->getBullets()[i] = NULL;
 	//player->getBullets().erase(player->getBullets().begin() + i);
+//player->getBullets().erase(player->getBullets().begin());
+
       }
+	 
     }
+  */
     // if (player->tmp)
     //   App.Draw(player->tmp->getSprite());
     // Diplay window contents on screen   

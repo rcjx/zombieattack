@@ -31,6 +31,12 @@ Player::~Player() {
 
 void Player::shoot() {
 
+   if(frame_buffer % 10)
+	   return;
+
+   std::cout << "SHOOT" << std::endl;
+
+
   if (facing == DOWN) {
     bullet_sprite.Rotate(180);
     bullet_sprite.SetPosition(_x+width/2, _y+height);
