@@ -18,28 +18,28 @@ void Bullet::move(float ElapsedTime, std::vector<Object*> objects) {
 
   if (facing == LEFT) {
     _x += -velocity;
-    if (_x > 0 and !collisionDetected(objects)) {
+    if (_x > 0 && !collisionDetected(objects)) {
       avatar.Move(-velocity, 0);
     }
     else _x += velocity;
   }
   else if (facing == RIGHT) {    
     _x += velocity;
-    if (_x + width < SCREEN_WIDTH and !collisionDetected(objects)) {
+    if (_x + width < SCREEN_WIDTH && !collisionDetected(objects)) {
       avatar.Move(velocity, 0);
     }
     else _x += -velocity;
   }
   else if (facing == UP) {
     _y += -velocity;
-    if (_y > 0 and !collisionDetected(objects)) {
+    if (_y > 0 && !collisionDetected(objects)) {
       avatar.Move(0, -velocity);    
     }
     else _y += velocity;
   }
   else if (facing == DOWN) {
     _y += velocity;
-    if (_y + height < SCREEN_HEIGHT and !collisionDetected(objects)) {
+    if (_y + height < SCREEN_HEIGHT && !collisionDetected(objects)) {
       avatar.Move(0, velocity);
     }
     else _y += -velocity;

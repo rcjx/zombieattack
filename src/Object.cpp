@@ -112,7 +112,7 @@ void Object::move(Direction d, float ElapsedTime,
     avatar.SetImage(left[frame]);
     facing = LEFT;
     _x += -velocity;
-    if (_x > 0 and !collisionDetected(objects)) {
+    if (_x > 0 && !collisionDetected(objects)) {
     avatar.Move(-velocity, 0);
     }
     else _x += velocity;
@@ -121,7 +121,7 @@ void Object::move(Direction d, float ElapsedTime,
     avatar.SetImage(right[frame]);
     facing = RIGHT;
     _x += velocity;
-    if (_x + width < SCREEN_WIDTH and !collisionDetected(objects)) {
+    if (_x + width < SCREEN_WIDTH && !collisionDetected(objects)) {
     avatar.Move(velocity, 0);
     }
     else _x += -velocity;
@@ -130,7 +130,7 @@ void Object::move(Direction d, float ElapsedTime,
     avatar.SetImage(up[frame]);
     facing = UP;
     _y += -velocity;
-    if (_y > 0 and !collisionDetected(objects)) {
+    if (_y > 0 && !collisionDetected(objects)) {
     avatar.Move(0, -velocity);    
     }
     else _y += velocity;
@@ -139,7 +139,7 @@ void Object::move(Direction d, float ElapsedTime,
     avatar.SetImage(down[frame]);
     facing = DOWN;
     _y += velocity;
-    if (_y + height < SCREEN_HEIGHT and !collisionDetected(objects)) {
+    if (_y + height < SCREEN_HEIGHT && !collisionDetected(objects)) {
     avatar.Move(0, velocity);
     }
     else _y += -velocity;
@@ -177,7 +177,7 @@ bool Object::collisionDetected(std::vector<Object*> objects) {
       subject_top = objects[i]->getSprite().GetPosition().y;
       subject_bottom = subject_top + objects[i]->getSprite().GetSize().y;
 
-      if ((bottom < subject_top) or (top >= subject_bottom) or (right < subject_left) or (left >= subject_right))
+      if ((bottom < subject_top) || (top >= subject_bottom) || (right < subject_left) || (left >= subject_right))
 	continue;
       else
 	return true;
