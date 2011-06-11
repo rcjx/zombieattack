@@ -6,6 +6,7 @@
 
 using namespace std;
 
+//SCREEN SIZE must be mutiples of Hash's int cellsize, 60 
 const int SCREEN_WIDTH = 180;
 const int SCREEN_HEIGHT = 180;
 
@@ -19,6 +20,7 @@ class Object
             rad = 40;    
         }      
         
+        //Simulates how move() will be fired inside hash. Display function atm
         void move()
         {
              cout << left << setw(4) << x << setw(4) << y << setw(4) << rad << endl;
@@ -27,12 +29,15 @@ class Object
         int x, y, rad;
 };
 
+//Hash class using a vector of int vectors
+//Cuts down collision check algorithm loops from O(n^2) to O(nlogn);
 class Hash
 {
     public:
         Hash() {}
         ~Hash() {}
         
+        //Sets up the hash for hashing, fires on every game turn
         void setup(int WIDTH, int HEIGHT, vector<Object*> list)
         {
             cellsize = 60; //60 looks like the best combination
@@ -40,8 +45,9 @@ class Hash
             column = WIDTH / cellsize; 
             row = HEIGHT / cellsize; 
              
-            bucket.resize(column * row);
-             
+            for(unsigned int i = 0; i < column * row; i++)
+                bucket.push_back(vector<int>()); 
+            
             cout << "object size " << list.size() << endl;  
             cout << "ID x   y   radius" << endl;  
             for(unsigned int i = 0; i < list.size(); i++)
@@ -50,11 +56,11 @@ class Hash
                 list[i]->move();
             }
             
-            //cout << "object hash positions " << endl;
+            cout << "object hash positions " << endl;
             for(unsigned int i = 0; i < list.size(); i++)
                 add(i, list); //Adds position of object
                 
-            cout << "hash size " << column * row << " vector size: " << bucket.size() << endl;
+            cout << "hashtable size " << column * row << " vector size: " << bucket.size() << endl;
             for(unsigned int i = 0; i < bucket.size(); i++)
             {
                 cout << i << ": " << bucket[i].size();            
@@ -70,6 +76,7 @@ class Hash
             }   
         }
         
+        //Adds object into the hashtable
         void add(int object, vector<Object*> list)
         {
             //Add top left corner
@@ -95,20 +102,12 @@ class Hash
                 bucket[bottomleft].push_back(object);
             if(bucket[bottomright].back() != object)
                 bucket[bottomright].push_back(object);
-             
-            /*
-            //Add top left corner
-            bucket[(int) (floor(list[object]->x / cellsize) + floor(list[object]->y / cellsize) * column)].push_back(object); 
-             
-            //Top right
-            bucket[(int) (floor((list[object]->x + list[object]->rad) / cellsize) + floor((list[object]->y) / cellsize) * column)].push_back(object); 
-             
-            //Bottom left
-            bucket[(int) (floor((list[object]->x) / cellsize) + floor((list[object]->y + list[object]->rad) / cellsize) * column)].push_back(object); 
-    
-            //Bottom right
-            bucket[(int) (floor((list[object]->x + list[object]->rad) / cellsize) + floor((list[object]->y + list[object]->rad) / cellsize) * column)].push_back(object); 
-            */
+        }
+        
+        //Resets hash, hashing happens on every frame refresh
+        void clear()
+        {
+            bucket.clear();     
         }
         
     private:
@@ -123,7 +122,6 @@ int main(int argc, char *argv[])
     const int size = 5;
     
     srand(time(NULL));
-    
     for(unsigned int i = 0; i < size; i++)
     {
         int x = rand() % 140; 
@@ -132,8 +130,17 @@ int main(int argc, char *argv[])
     }
     
     Hash hash;
+    
+    clock_t start, end, middle;
+    start = clock();
     hash.setup(SCREEN_WIDTH, SCREEN_HEIGHT, vec);
-
+    middle = clock();
+    
+    hash.clear();
+    end = clock();
+    
+    cout << (double) (middle - start) / CLOCKS_PER_SEC << " to hash " << endl;
+    cout << (double) (end - start) / CLOCKS_PER_SEC << " to hash and clear" <<endl;
 
     system("PAUSE");
     return EXIT_SUCCESS;
