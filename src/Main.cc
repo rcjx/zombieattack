@@ -99,38 +99,8 @@ int main(int argc, char** argv) {
     for(unsigned int i = 0; i < player->bullets.size(); ++i) {
       App.Draw(player->bullets[i]->getSprite());
       player->bullets[i]->move(ElapsedTime,
-			       grid.getNearby(player->bullets[i]));
-
-      if(player->bullets[i]->collisionDetected(objects)) {
-	std::cout << i << " size: " << player->bullets.size() << std::endl;
-			
-	delete player->bullets[i];
-
-			//delete player->bullets[i];
-			//player->bullets[i] = NULL;
-	player->bullets.erase(player->bullets.begin() + i);
-      }
+			       grid.getNearby(player->bullets[i]), player->bullets, i);
     }
-
-	/*
-    for (unsigned int i = 0; i < player->getBullets().size(); ++i) {
-      App.Draw(player->getBullets()[i]->getSprite());      
-      player->getBullets()[i]->move(ElapsedTime, objects);
-      if (player->getBullets()[i]->collisionDetected(objects)) {
-		  std::cout << i << " size: " << player->getBullets().size() << std::endl;
-
-	    //delete player->getBullets()[i];
-		  player->getBullets().pop_back();
-
-	//delete player->getBullets()[i];
-	//player->getBullets()[i] = NULL;
-	//player->getBullets().erase(player->getBullets().begin() + i);
-//player->getBullets().erase(player->getBullets().begin());
-
-      }
-	 
-    }
-  */
 
     // Diplay window contents on screen
     grid.clear();

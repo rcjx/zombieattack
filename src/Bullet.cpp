@@ -5,47 +5,64 @@ Bullet::Bullet(sf::Sprite adjusted_sprite) {
   speed *= 10;
 }
 
-Bullet::~Bullet() {
-  std::cout << "destructed" << std::endl;
-}
+Bullet::~Bullet() {}
 
-void Bullet::move(float ElapsedTime, std::vector<Object*> objects) {
+void Bullet::move(float ElapsedTime, std::vector<Object*> objects, std::vector<Bullet*> &bullets, int me) {
 
   int _x = this->getSprite().GetPosition().x;
   int _y = this->getSprite().GetPosition().y;
   int _w = avatar.GetSize().x;
   int _h = avatar.GetSize().y;
-    
   
   float velocity = speed * ElapsedTime;
 
   if (facing == LEFT) {
     _x += -velocity;
-    if (_x > 0 && !collisionDetected(objects)) {
+    if (_x > 0 && !collisionDetected(objects)) 
+	{
       avatar.Move(-velocity, 0);
     }
-    else _x += velocity;
+    else 
+	{
+		delete bullets[me];
+		bullets.erase(bullets.begin() + me);
+	}
   }
   else if (facing == RIGHT) {    
     _x += velocity;
-    if (_x + _w < SCREEN_WIDTH && !collisionDetected(objects)) {
+    if (_x + _w < SCREEN_WIDTH && !collisionDetected(objects)) 
+	{
       avatar.Move(velocity, 0);
     }
-    else _x += -velocity;
+    else
+	{
+		delete bullets[me];
+		bullets.erase(bullets.begin() + me);
+	}
   }
   else if (facing == UP) {
     _y += -velocity;
-    if (_y > 0 && !collisionDetected(objects)) {
+    if (_y > 0 && !collisionDetected(objects)) 
+	{
       avatar.Move(0, -velocity);    
     }
-    else _y += velocity;
+    else 
+	{
+			delete bullets[me];
+		bullets.erase(bullets.begin() + me);
+	}
   }
   else if (facing == DOWN) {
     _y += velocity;
-    if (_y + _h < SCREEN_HEIGHT && !collisionDetected(objects)) {
+    if (_y + _h < SCREEN_HEIGHT && !collisionDetected(objects)) 
+	{
       avatar.Move(0, velocity);
     }
-    else _y += -velocity;
+    else
+	{
+		delete bullets[me];
+		bullets.erase(bullets.begin() + me);
+	}
   }
 }
 
