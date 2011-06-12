@@ -6,9 +6,9 @@
 
 #include "Enemy.h"
 #include "Player.h"
+#include "SpatialHash.h"
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
 
   sf::RenderWindow App(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Zombie Attack");
 
@@ -34,17 +34,21 @@ int main(int argc, char** argv)
   //objects.push_back(thing);
   //objects.push_back(new Enemy(SCREEN_WIDTH - 10, SCREEN_HEIGHT - 10));
   objects.push_back(new Enemy(10, 10));
-  //objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
-  // objects.push_back(new Enemy(10, SCREEN_HEIGHT - 10));
-  // objects.push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 10));
-  // objects.push_back(new Enemy(100, 10));
-  // objects.push_back(new Enemy(SCREEN_WIDTH - 100, 10));
-  // objects.push_back(new Enemy(100, SCREEN_HEIGHT - 10));
+  objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
+  objects.push_back(new Enemy(10, SCREEN_HEIGHT - 100));
+  objects.push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100));
+  objects.push_back(new Enemy(100, 100));
+  objects.push_back(new Enemy(SCREEN_WIDTH - 100, 100));
+  objects.push_back(new Enemy(100, SCREEN_HEIGHT - 100));
 
+  SpatialHash grid;
+
+  float running_time = 0.0;
 
   // Start game loop
   while (App.IsOpened()) {    
-	
+
+    grid.setup(objects);
     // Process events
     sf::Event Event;
 
@@ -66,19 +70,20 @@ int main(int argc, char** argv)
 
     // Get elapsed time
     float ElapsedTime = App.GetFrameTime();
+    running_time += ElapsedTime;
 
+    if (App.GetInput().IsKeyDown(sf::Key::Space))
+      player->shoot(running_time);
+    
     // Move the sprite
     if (App.GetInput().IsKeyDown(sf::Key::Left))
       player->move(LEFT, ElapsedTime, objects);
     if (App.GetInput().IsKeyDown(sf::Key::Right))
-      player->move(RIGHT, ElapsedTime, objects);
+      player->move(RIGHT, ElapsedTime, grid.getNearby(player));
     if (App.GetInput().IsKeyDown(sf::Key::Up))
-      player->move(UP, ElapsedTime, objects);
+      player->move(UP, ElapsedTime, grid.getNearby(player));
     if (App.GetInput().IsKeyDown(sf::Key::Down))
-      player->move(DOWN, ElapsedTime, objects);
-
-    if (App.GetInput().IsKeyDown(sf::Key::Space))
-      player->shoot();
+      player->move(DOWN, ElapsedTime, grid.getNearby(player));
 
     //thing->move(LEFT, ElapsedTime, objects);   
       
@@ -87,26 +92,25 @@ int main(int argc, char** argv)
     // App.Draw(Rect);
     App.Draw(player->getSprite());
     for (unsigned int i = 0; i < objects.size(); ++i)  {
-      objects[i]->aggro(*player, ElapsedTime, objects);
+      objects[i]->aggro(*player, ElapsedTime, grid.getNearby(objects[i]));
       App.Draw(objects[i]->getSprite());
     }
 
-	for(unsigned int i = 0; i < player->bullets.size(); ++i)
-	{
-		App.Draw(player->bullets[i]->getSprite());
-		player->bullets[i]->move(ElapsedTime, objects);
+    for(unsigned int i = 0; i < player->bullets.size(); ++i) {
+      App.Draw(player->bullets[i]->getSprite());
+      player->bullets[i]->move(ElapsedTime,
+			       grid.getNearby(player->bullets[i]));
 
-		if(player->bullets[i]->collisionDetected(objects))
-		{
-		    std::cout << i << " size: " << player->bullets.size() << std::endl;
+      if(player->bullets[i]->collisionDetected(objects)) {
+	std::cout << i << " size: " << player->bullets.size() << std::endl;
 			
-			delete player->bullets[i];
+	delete player->bullets[i];
 
 			//delete player->bullets[i];
 			//player->bullets[i] = NULL;
-			player->bullets.erase(player->bullets.begin() + i);
-		}
-	}
+	player->bullets.erase(player->bullets.begin() + i);
+      }
+    }
 
 	/*
     for (unsigned int i = 0; i < player->getBullets().size(); ++i) {
@@ -127,11 +131,11 @@ int main(int argc, char** argv)
 	 
     }
   */
-    // if (player->tmp)
-    //   App.Draw(player->tmp->getSprite());
-    // Diplay window contents on screen   
-    App.Display();
 
+    // Diplay window contents on screen
+    grid.clear();
+
+    App.Display();
   }
   
   return 0;

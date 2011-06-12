@@ -70,10 +70,6 @@ Object::Object() {
   avatar.SetColor(sf::Color(255, 255, 255, 255));
   avatar.SetPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + std::rand()%100);
 
-  // Get the sprite's dimensions
-  width  = avatar.GetSize().x;
-  height = avatar.GetSize().y;
-
   // Resize the sprite
   // avatar.Resize(72, 70);
 
@@ -92,8 +88,11 @@ Object::~Object() {
 void Object::move(Direction d, float ElapsedTime,
 		  std::vector<Object*> objects) {
 
-  _x = this->getSprite().GetPosition().x;
-  _y = this->getSprite().GetPosition().y;
+  int _x = this->getSprite().GetPosition().x;
+  int _y = this->getSprite().GetPosition().y;
+  int _w  = avatar.GetSize().x;
+  int _h = avatar.GetSize().y;
+
   
   float velocity = speed * ElapsedTime;
 
@@ -115,16 +114,14 @@ void Object::move(Direction d, float ElapsedTime,
     if (_x > 0 && !collisionDetected(objects)) {
     avatar.Move(-velocity, 0);
     }
-    else _x += velocity;
   }
   else if (d == RIGHT) {    
     avatar.SetImage(right[frame]);
     facing = RIGHT;
     _x += velocity;
-    if (_x + width < SCREEN_WIDTH && !collisionDetected(objects)) {
+    if (_x + _w < SCREEN_WIDTH && !collisionDetected(objects)) {
     avatar.Move(velocity, 0);
     }
-    else _x += -velocity;
   }
   else if (d == UP) {
     avatar.SetImage(up[frame]);
@@ -133,16 +130,14 @@ void Object::move(Direction d, float ElapsedTime,
     if (_y > 0 && !collisionDetected(objects)) {
     avatar.Move(0, -velocity);    
     }
-    else _y += velocity;
   }
   else if (d == DOWN) {
     avatar.SetImage(down[frame]);
     facing = DOWN;
     _y += velocity;
-    if (_y + height < SCREEN_HEIGHT && !collisionDetected(objects)) {
+    if (_y + _h < SCREEN_HEIGHT && !collisionDetected(objects)) {
     avatar.Move(0, velocity);
     }
-    else _y += -velocity;
   }  
 }
 
@@ -165,9 +160,9 @@ bool Object::collisionDetected(std::vector<Object*> objects) {
   int top, subject_top;
   int bottom, subject_bottom;
 
-  left = _x;
+  left = avatar.GetPosition().x;
   right = left + this->getSprite().GetSize().x;
-  top = _y;
+  top = avatar.GetPosition().y;
   bottom = top + this->getSprite().GetSize().y;
 
   for (unsigned int i = 0; i < objects.size(); i++) {

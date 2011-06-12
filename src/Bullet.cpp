@@ -2,7 +2,7 @@
 
 Bullet::Bullet(sf::Sprite adjusted_sprite) {
   avatar = adjusted_sprite;
-  speed *= 0.1;
+  speed *= 10;
 }
 
 Bullet::~Bullet() {
@@ -11,8 +11,11 @@ Bullet::~Bullet() {
 
 void Bullet::move(float ElapsedTime, std::vector<Object*> objects) {
 
-  _x = this->getSprite().GetPosition().x;
-  _y = this->getSprite().GetPosition().y;
+  int _x = this->getSprite().GetPosition().x;
+  int _y = this->getSprite().GetPosition().y;
+  int _w = avatar.GetSize().x;
+  int _h = avatar.GetSize().y;
+    
   
   float velocity = speed * ElapsedTime;
 
@@ -25,7 +28,7 @@ void Bullet::move(float ElapsedTime, std::vector<Object*> objects) {
   }
   else if (facing == RIGHT) {    
     _x += velocity;
-    if (_x + width < SCREEN_WIDTH && !collisionDetected(objects)) {
+    if (_x + _w < SCREEN_WIDTH && !collisionDetected(objects)) {
       avatar.Move(velocity, 0);
     }
     else _x += -velocity;
@@ -39,7 +42,7 @@ void Bullet::move(float ElapsedTime, std::vector<Object*> objects) {
   }
   else if (facing == DOWN) {
     _y += velocity;
-    if (_y + height < SCREEN_HEIGHT && !collisionDetected(objects)) {
+    if (_y + _h < SCREEN_HEIGHT && !collisionDetected(objects)) {
       avatar.Move(0, velocity);
     }
     else _y += -velocity;
@@ -49,19 +52,20 @@ void Bullet::move(float ElapsedTime, std::vector<Object*> objects) {
 
 bool Bullet::collisionDetected(std::vector<Object*> objects) {
 
-	std::cout << "Bullet fired" << std::endl;
-
-
-
+  int _x = this->getSprite().GetPosition().x;
+  int _y = this->getSprite().GetPosition().y;
+  int _w = avatar.GetSize().x;
+  int _h = avatar.GetSize().y;
+  
   int left, subject_left;
   int right, subject_right;
   int top, subject_top;
   int bottom, subject_bottom;
 
   left = _x;
-  right = left + this->getSprite().GetSize().x;
+  right = left + _w;
   top = _y;
-  bottom = top + this->getSprite().GetSize().y;
+  bottom = top + _h;
 
   for (unsigned int i = 1; i < objects.size(); i++) {
     if (this != objects[i]) {
