@@ -2,7 +2,7 @@
 
 Bullet::Bullet(sf::Sprite adjusted_sprite) {
   avatar = adjusted_sprite;
-  speed *= 0.1;
+  speed *= 10;
 }
 
 Bullet::~Bullet() {

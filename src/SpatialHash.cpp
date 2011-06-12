@@ -25,21 +25,21 @@ void SpatialHash::setup(std::vector<Object*> objects) {
   for(unsigned int i = 0; i < objects.size(); i++)
     add(objects[i]); //Adds position of object
                 
-  std::cout << "hashtable size " << column * row << " std::vector size: " << bucket.size() << std::endl;
-  for(unsigned int i = 0; i < bucket.size(); i++) {
+  // std::cout << "hashtable size " << column * row << " std::vector size: " << bucket.size() << std::endl;
+  // for(unsigned int i = 0; i < bucket.size(); i++) {
 
-    std::cout << "bucket " << i << ": " << bucket[i].size() <<
-      " objects ( ";            
-    if(bucket[i].size() > 0) {
-      for(unsigned int j = 0; j < bucket[i].size(); j++)
-  	std::cout << bucket[i][j] << " ";
-    }
-    if(bucket[i].size() > 1)
-      std::cout << ") collision check(s) needed";
-    else
-      std::cout << ")";
-    std::cout << std::endl;
-  }   
+  //   std::cout << "bucket " << i << ": " << bucket[i].size() <<
+  //     " objects ( ";            
+  //   if(bucket[i].size() > 0) {
+  //     for(unsigned int j = 0; j < bucket[i].size(); j++)
+  // 	std::cout << bucket[i][j] << " ";
+  //   }
+  //   if(bucket[i].size() > 1)
+  //     std::cout << ") collision check(s) needed";
+  //   else
+  //     std::cout << ")";
+  //   std::cout << std::endl;
+  // }   
 }
         
 //Adds object into the hashtable
@@ -95,10 +95,10 @@ std::vector<int> SpatialHash::hashCodes(Object* object) {
   if (topright != topleft)
     hash_codes.push_back(topright);
   else hash_codes.push_back(topleft);
-  if (bottomleft != topleft and bottomleft != topright)
+  if (bottomleft != topleft && bottomleft != topright)
     hash_codes.push_back(bottomleft);
   else hash_codes.push_back(topleft);
-  if (bottomright != topleft and bottomright != topright and
+  if (bottomright != topleft && bottomright != topright and
       bottomright != bottomleft)
     hash_codes.push_back(bottomright);
   else hash_codes.push_back(topleft);

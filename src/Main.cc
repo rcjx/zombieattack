@@ -8,8 +8,7 @@
 #include "Player.h"
 #include "SpatialHash.h"
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
 
   sf::RenderWindow App(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Zombie Attack");
 
@@ -44,6 +43,8 @@ int main(int argc, char** argv)
 
   SpatialHash grid;
 
+  float running_time = 0.0;
+
   // Start game loop
   while (App.IsOpened()) {    
 
@@ -69,7 +70,11 @@ int main(int argc, char** argv)
 
     // Get elapsed time
     float ElapsedTime = App.GetFrameTime();
+    running_time += ElapsedTime;
 
+    if (App.GetInput().IsKeyDown(sf::Key::Space))
+      player->shoot(running_time);
+    
     // Move the sprite
     if (App.GetInput().IsKeyDown(sf::Key::Left))
       player->move(LEFT, ElapsedTime, objects);
@@ -79,9 +84,6 @@ int main(int argc, char** argv)
       player->move(UP, ElapsedTime, grid.getNearby(player));
     if (App.GetInput().IsKeyDown(sf::Key::Down))
       player->move(DOWN, ElapsedTime, grid.getNearby(player));
-
-    if (App.GetInput().IsKeyDown(sf::Key::Space))
-      player->shoot();
 
     //thing->move(LEFT, ElapsedTime, objects);   
       
