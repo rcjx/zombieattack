@@ -85,60 +85,59 @@ Object::~Object() {
 	std::cout << "O destructed" << std::endl;
 }
 
-void Object::move(Direction d, float ElapsedTime,
-		  std::vector<Object*> objects) {
+void Object::move(Direction d, float ElapsedTime, std::vector<Object*> objects) 
+{
+	int _x = this->getSprite().GetPosition().x;
+	int _y = this->getSprite().GetPosition().y;
+	int _w  = avatar.GetSize().x;
+	int _h = avatar.GetSize().y;
 
-  int _x = this->getSprite().GetPosition().x;
-  int _y = this->getSprite().GetPosition().y;
-  int _w  = avatar.GetSize().x;
-  int _h = avatar.GetSize().y;
+	int *available = collisions(objects);
 
-  
-  float velocity = speed * ElapsedTime;
+	float velocity = speed * ElapsedTime;
 
-  frame_buffer++;
-  // std::cout << frame_buffer << ", " << frame << std::endl;
-  if (frame_buffer%10 == 0) {
-    frame++;
-    //std::cout << frame_buffer << ", " << frame << std::endl;
-    frame_buffer = 0;
-  }
+	frame_buffer++;
+	if (frame_buffer%10 == 0) 
+	{
+		frame++;
+		frame_buffer = 0;
+	}
 
-  if (frame == 3)
-    frame = 0;      
+	if (frame == 3)
+	    frame = 0;      
 
-  if (d == LEFT) {
-    avatar.SetImage(left[frame]);
-    facing = LEFT;
-    _x += -velocity;
-    if (_x > 0 && !collisionDetected(objects)) {
-    avatar.Move(-velocity, 0);
-    }
-  }
-  else if (d == RIGHT) {    
-    avatar.SetImage(right[frame]);
-    facing = RIGHT;
-    _x += velocity;
-    if (_x + _w < SCREEN_WIDTH && !collisionDetected(objects)) {
-    avatar.Move(velocity, 0);
-    }
-  }
-  else if (d == UP) {
-    avatar.SetImage(up[frame]);
-    facing = UP;
-    _y += -velocity;
-    if (_y > 0 && !collisionDetected(objects)) {
-    avatar.Move(0, -velocity);    
-    }
-  }
-  else if (d == DOWN) {
-    avatar.SetImage(down[frame]);
-    facing = DOWN;
-    _y += velocity;
-    if (_y + _h < SCREEN_HEIGHT && !collisionDetected(objects)) {
-    avatar.Move(0, velocity);
-    }
-  }  
+	if (d == LEFT) 
+	{
+		avatar.SetImage(left[frame]);
+		facing = LEFT;
+		_x += -velocity;
+		if (_x > 0 && available[LEFT])
+			avatar.Move(-velocity, 0);
+	}
+	else if (d == RIGHT) 
+	{    
+		avatar.SetImage(right[frame]);
+		facing = RIGHT;
+		_x += velocity;
+		if (_x + _w < SCREEN_WIDTH && available[RIGHT])
+			avatar.Move(velocity, 0);
+	}
+	else if (d == UP) 
+	{
+		avatar.SetImage(up[frame]);
+		facing = UP;
+		_y += -velocity;
+		if (_y > 0 && available[UP]) 
+			avatar.Move(0, -velocity);    
+	}
+	else if (d == DOWN) 
+	{
+		avatar.SetImage(down[frame]);
+		facing = DOWN;
+		_y += velocity;
+		if (_y + _h < SCREEN_HEIGHT && available[DOWN])
+		    avatar.Move(0, velocity);
+	}  
 }
 
 sf::Sprite Object::getSprite() {
@@ -153,31 +152,35 @@ void Object::setFacing(Direction d) {
   facing = d;
 }
 
-bool Object::collisionDetected(std::vector<Object*> objects) {
+int* Object::collisions(std::vector<Object*> objects)
+{
+	int *open_sides = new int[4];
+	for(unsigned int i = 0; i < 4; ++i)
+		open_sides[i] = 1; //Declares all sides with no collision
 
-  int left, subject_left;
-  int right, subject_right;
-  int top, subject_top;
-  int bottom, subject_bottom;
+	float _x = avatar.GetPosition().x + (avatar.GetSize().x / 2);
+	float _y = avatar.GetPosition().y + (avatar.GetSize().y / 2);
 
-  left = avatar.GetPosition().x;
-  right = left + this->getSprite().GetSize().x;
-  top = avatar.GetPosition().y;
-  bottom = top + this->getSprite().GetSize().y;
+	for(unsigned int i = 0; i < objects.size(); ++i)
+	{
+		if(this != objects[i])
+		{
+			float other_x = objects[i]->getSprite().GetPosition().x + (objects[i]->getSprite().GetSize().x / 2);
+			float other_y = objects[i]->getSprite().GetPosition().y + (objects[i]->getSprite().GetSize().y / 2);
 
-  for (unsigned int i = 0; i < objects.size(); i++) {
-    if (this != objects[i]) {
-      subject_left = objects[i]->getSprite().GetPosition().x;
-      subject_right = subject_left + objects[i]->getSprite().GetSize().x;
-      subject_top = objects[i]->getSprite().GetPosition().y;
-      subject_bottom = subject_top + objects[i]->getSprite().GetSize().y;
+			float y = abs(_y - other_y);
+			y -= (objects[i]->getSprite().GetSize().y / 2) + (avatar.GetSize().y / 2);
+			float x = abs(_x - other_x);
+			x -= (objects[i]->getSprite().GetSize().x / 2) + (avatar.GetSize().x / 2);
 
-      if ((bottom < subject_top) || (top >= subject_bottom) || (right < subject_left) || (left >= subject_right))
-	continue;
-      else
-	return true;
-    }    
-  } 
-  return false;
-
+			if(y < 0 && x < 0)
+			{
+			    if(y > -3 && y >= x)
+				    (_y > other_y ? open_sides[UP] = 0 : open_sides[DOWN] = 0);  
+				if(x > -3 && x >= y)
+					(_x > other_x ? open_sides[LEFT] = 0 : open_sides[RIGHT] = 0);
+			}	
+		}
+	}	
+    return open_sides;
 }

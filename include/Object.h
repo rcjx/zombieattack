@@ -26,8 +26,8 @@ class Object {
 		     { 	 }
   Direction getFacing();
   void setFacing(Direction d);
-  bool collisionDetected(std::vector<Object*> objects);  
-  
+  int* collisions(std::vector<Object*> objects);
+
   protected:
   sf::Image up[3];
   sf::Image down[3];
