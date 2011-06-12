@@ -9,7 +9,9 @@ SpatialHash::SpatialHash() {
   column = SCREEN_WIDTH / cellsize; 
   row = SCREEN_HEIGHT / cellsize;
 
-  for(int i = 0; i < column * row; i++)
+  size = column * row;
+
+  for(unsigned int i = 0; i < size; i++)
     bucket.push_back(std::vector<Object*>()); 
 }
 
@@ -113,10 +115,6 @@ std::vector<Object*> SpatialHash::getNearby(Object *subject) {
 
   for (unsigned int i = 0; i < hash_codes.size(); ++i)
   {
-	  if(hash_codes[i] >= column * row)
-		  continue;
-
-
     nearby_objects.insert(nearby_objects.end(), bucket[hash_codes[i]].begin(),
 			  bucket[hash_codes[i]].end());
   }
