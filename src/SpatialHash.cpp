@@ -112,8 +112,14 @@ std::vector<Object*> SpatialHash::getNearby(Object *subject) {
   std::vector<Object*> nearby_objects; 
 
   for (unsigned int i = 0; i < hash_codes.size(); ++i)
+  {
+	  if(hash_codes[i] >= column * row)
+		  continue;
+
+
     nearby_objects.insert(nearby_objects.end(), bucket[hash_codes[i]].begin(),
 			  bucket[hash_codes[i]].end());
+  }
 
   return nearby_objects;
 }
