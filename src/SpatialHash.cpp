@@ -98,7 +98,7 @@ std::vector<int> SpatialHash::hashCodes(Object* object) {
   if (bottomleft != topleft && bottomleft != topright)
     hash_codes.push_back(bottomleft);
   else hash_codes.push_back(topleft);
-  if (bottomright != topleft && bottomright != topright and
+  if (bottomright != topleft && bottomright != topright &&
       bottomright != bottomleft)
     hash_codes.push_back(bottomright);
   else hash_codes.push_back(topleft);

@@ -2,6 +2,8 @@
 
 #include "Player.h"
 
+const float Player::SHOOT_DELAY = 0.25;
+
 Player::Player() : Entity(80, 5) {
 
   int _x = SCREEN_WIDTH/2-avatar.GetSize().x/2;

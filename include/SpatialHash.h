@@ -38,7 +38,7 @@ class SpatialHash {
 
   int column;
   int row;
-  int cellsize;
+  double cellsize;
   std::vector<std::vector<Object*> > bucket;
 };
 
