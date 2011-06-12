@@ -173,9 +173,9 @@ int* Object::collisions(std::vector<Object*> objects)
 
 			if(y < 0 && x < 0)
 			{
-			    if(y > -3 && y >= x)
+			    if(y >= x)
 				    (_y > other_y ? open_sides[UP] = 0 : open_sides[DOWN] = 0);  
-				if(x > -3 && x >= y)
+				if(x >= y)
 					(_x > other_x ? open_sides[LEFT] = 0 : open_sides[RIGHT] = 0);
 			}	
 		}
