@@ -16,6 +16,7 @@ enum Direction {
 
 class Object {
 
+  friend class SpatialHash;
  public:
   Object();
   ~Object();
@@ -25,7 +26,7 @@ class Object {
 		     { 	 }
   Direction getFacing();
   void setFacing(Direction d);
-  bool collisionDetected(std::vector<Object*> objects);
+  bool collisionDetected(std::vector<Object*> objects);  
   
   protected:
   sf::Image up[3];
@@ -33,11 +34,7 @@ class Object {
   sf::Image left[3];
   sf::Image right[3];
   sf::Sprite avatar;
-  int _x;
-  int _y;
   int speed;
-  int width;
-  int height;
   int frame;
   int frame_buffer;
   bool facingRight;

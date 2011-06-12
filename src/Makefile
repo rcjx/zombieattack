@@ -1,4 +1,4 @@
-OBJS = Object.o Bullet.o Entity.o Enemy.o Player.o Main.o
+OBJS = Object.o SpatialHash.o Bullet.o Entity.o Enemy.o Player.o Main.o 
 CC = g++
 DEBUG = -g
 CFLAGS = -Wall -c $(DEBUG) -lsfml-audio -lsfml-graphics -lsfml-system -I../include
@@ -15,6 +15,9 @@ zombie.bin : $(OBJS)
 Object.o : Object.cpp 
 	$(CC) $(CFLAGS) Object.cpp
 
+SpatialHash.o : SpatialHash.cpp 
+	$(CC) $(CFLAGS) SpatialHash.cpp
+
 Bullet.o : Bullet.cpp 
 	$(CC) $(CFLAGS) Bullet.cpp
 
@@ -30,7 +33,5 @@ Player.o : Player.cpp
 Main.o : Main.cc 
 	$(CC) $(CFLAGS) Main.cc
 
-
-
 clean:
-	\rm *.o *.bin
+	rm *.o *.bin
