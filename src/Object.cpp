@@ -81,9 +81,7 @@ Object::Object() {
   frame_buffer = 0;
 }
 
-Object::~Object() {
-	std::cout << "O destructed" << std::endl;
-}
+Object::~Object() {}
 
 void Object::move(Direction d, float ElapsedTime, std::vector<Object*> objects) 
 {

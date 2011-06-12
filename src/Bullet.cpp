@@ -5,9 +5,7 @@ Bullet::Bullet(sf::Sprite adjusted_sprite) {
   speed *= 10;
 }
 
-Bullet::~Bullet() {
-  std::cout << "destructed" << std::endl;
-}
+Bullet::~Bullet() {}
 
 void Bullet::move(float ElapsedTime, std::vector<Object*> objects) {
 
