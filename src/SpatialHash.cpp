@@ -2,7 +2,6 @@
 
 //Hash class using a vector of int vectors
 //Cuts down collision check algorithm loops from O(n^2) to O(nlogn);
-
 SpatialHash::SpatialHash() {
 
   cellsize = 100;
@@ -16,9 +15,7 @@ SpatialHash::SpatialHash() {
 }
 
 SpatialHash::~SpatialHash() {
-
   clear();
-
 }
         
 //Sets up the hash for hashing, fires on every game turn
@@ -52,24 +49,8 @@ void SpatialHash::add(Object* object) {
   //std::cout << object << ": " << topleft << " " << topright << " AND "
   //     << bottomleft << " " << bottomright << std::endl;       
 
-  int topleft = hash_codes[TOPLEFT];
-  int topright = hash_codes[TOPRIGHT];
-  int bottomleft = hash_codes[BOTTOMLEFT];
-  int bottomright = hash_codes[BOTTOMRIGHT];
-
-  if(find(bucket[topleft].begin(), bucket[topleft].end(), object)
-     == bucket[topleft].end())
-    bucket[topleft].push_back(object);
-  if(find(bucket[topright].begin(), bucket[topright].end(), object)
-     == bucket[topright].end())
-    bucket[topright].push_back(object);    
-  if(find(bucket[bottomleft].begin(), bucket[bottomleft].end(), object)
-     == bucket[bottomleft].end())
-    bucket[bottomleft].push_back(object);
-  if(find(bucket[bottomright].begin(), bucket[bottomright].end(), object)
-     == bucket[bottomright].end())
-    bucket[bottomright].push_back(object);
-  //std::cout << "1 loop"<< std::endl;    
+  for(unsigned int i = 0; i < hash_codes.size(); ++i)
+	  bucket[hash_codes[i]].push_back(object);
 }
 
 std::vector<int> SpatialHash::hashCodes(Object* object) {
@@ -92,18 +73,14 @@ std::vector<int> SpatialHash::hashCodes(Object* object) {
   int bottomright = (int) (floor((_x + _w) / cellsize) + floor((_y + _h) / cellsize) * column);
 
   std::vector<int> hash_codes;
-    
-  hash_codes.push_back(topleft);
-  if (topright != topleft)
-    hash_codes.push_back(topright);
-  else hash_codes.push_back(topleft);
-  if (bottomleft != topleft && bottomleft != topright)
-    hash_codes.push_back(bottomleft);
-  else hash_codes.push_back(topleft);
-  if (bottomright != topleft && bottomright != topright &&
-      bottomright != bottomleft)
-    hash_codes.push_back(bottomright);
-  else hash_codes.push_back(topleft);
+
+    hash_codes.push_back(topleft);
+	if(hash_codes.back() != topright)
+		hash_codes.push_back(topright);
+	if(hash_codes.back() != bottomleft)
+		hash_codes.push_back(bottomleft);
+	if(hash_codes.back() != bottomright)
+		hash_codes.push_back(bottomright);
   
   return hash_codes;
     
@@ -116,7 +93,7 @@ std::vector<Object*> SpatialHash::getNearby(Object *subject) {
   for (unsigned int i = 0; i < hash_codes.size(); ++i)
   {
     nearby_objects.insert(nearby_objects.end(), bucket[hash_codes[i]].begin(),
-			  bucket[hash_codes[i]].end());
+ 			  bucket[hash_codes[i]].end());
   }
 
   return nearby_objects;

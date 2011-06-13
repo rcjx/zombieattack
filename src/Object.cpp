@@ -65,7 +65,17 @@ Object::Object() {
     exit(EXIT_FAILURE);
   }
 
-  down[0].CreateMaskFromColor(sf::Color(255, 255, 255));
+    for(unsigned int i = 0; i < 3; ++i)
+	    down[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+    for(unsigned int i = 0; i < 3; ++i)
+	    up[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+    for(unsigned int i = 0; i < 3; ++i)
+	    left[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+    for(unsigned int i = 0; i < 3; ++i)
+	    right[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+	
+
+
   avatar.SetImage(down[0]);
   avatar.SetColor(sf::Color(255, 255, 255, 255));
   avatar.SetPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + std::rand()%100);
@@ -163,6 +173,7 @@ int* Object::collisions(std::vector<Object*> objects)
 	{
 		if(this != objects[i])
 		{
+			std::cout << "collision";
 			float other_x = objects[i]->getSprite().GetPosition().x + (objects[i]->getSprite().GetSize().x / 2);
 			float other_y = objects[i]->getSprite().GetPosition().y + (objects[i]->getSprite().GetSize().y / 2);
 
@@ -179,6 +190,7 @@ int* Object::collisions(std::vector<Object*> objects)
 					(_x > other_x ? open_sides[LEFT] = 0 : open_sides[RIGHT] = 0);
 			}	
 		}
+		std::cout << std::endl;
 	}	
     return open_sides;
 }
