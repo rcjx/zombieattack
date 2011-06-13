@@ -93,8 +93,8 @@ std::vector<int> SpatialHash::getNearby(Object *subject) {
 //Resets hash, hashing happens on every frame refresh
 void SpatialHash::clear() {
   bucket.clear();
-  for(int i = 0; i < column * row; i++)
-    bucket.push_back(std::vector<int>()); 
+  for(int i = 0; i < size; i++)
+      bucket.push_back(std::vector<int>()); 
 }
         
 

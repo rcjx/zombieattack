@@ -10,9 +10,10 @@ class Enemy : public Entity {
  public:
   Enemy();
   Enemy(int x, int y, int level = 1);
-  ~Enemy();  
+  ~Enemy(); 
+  Enemy(Enemy &other);
 
-  void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible);
+  void aggro(Object &target, float ElapsedTime, std::vector<Object*> &objects, std::vector<int> possible);
  private:
   int inventory;
 };

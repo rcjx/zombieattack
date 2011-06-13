@@ -93,6 +93,23 @@ Object::Object() {
 
 Object::~Object() {}
 
+Object::Object(int x, int y, int level)
+{
+    health = rand() % 5 + level;
+}
+
+Object::Object(Object &other)
+{
+	frame = other.frame;
+	frame_buffer = other.frame_buffer;
+	ignore = other.ignore;
+	type = other.type;
+	facingRight = other.facingRight;
+	facing = other.facing;
+	health = other.health;
+	attack = other.attack;
+}
+
 void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects, std::vector<int> possible) 
 {
 	int _x = this->getSprite().GetPosition().x;
@@ -160,7 +177,7 @@ void Object::setFacing(Direction d) {
   facing = d;
 }
 
-int* Object::collisions(std::vector<Object*> objects, std::vector<int> possible)
+int* Object::collisions(std::vector<Object*> &objects, std::vector<int> possible)
 {
 	int *open_sides = new int[4], position;
 	for(unsigned int i = 0; i < 4; ++i)
@@ -169,6 +186,10 @@ int* Object::collisions(std::vector<Object*> objects, std::vector<int> possible)
 	float _x = avatar.GetPosition().x + (avatar.GetSize().x / 2);
 	float _y = avatar.GetPosition().y + (avatar.GetSize().y / 2);
 
+	//if(possible.size() > 0 && possible[0] < ignore)
+	//	possible.erase(possible.begin());
+
+	//std::cout << possible.size() << std::endl;
 	for(unsigned int i = 0; i < possible.size(); ++i)
 	{
 		position = possible[i];
@@ -188,8 +209,33 @@ int* Object::collisions(std::vector<Object*> objects, std::vector<int> possible)
 				    (_y > other_y ? open_sides[UP] = 0 : open_sides[DOWN] = 0);  
 				if(x >= y)
 					(_x > other_x ? open_sides[LEFT] = 0 : open_sides[RIGHT] = 0);
+				if(enemy(objects[position]))
+					sendDamage(objects, i);
 			}	
 		}
 	}	
     return open_sides;
+}
+
+Type Object::getType()
+{
+    return type;
+}
+
+bool Object::enemy(Object *subject)
+{
+    if(type != subject->getType())
+		return true;
+	return false;
+}
+
+void Object::sendDamage(std::vector<Object*> &objects, int position)
+{
+	objects[position]->setDamage(attack);
+}
+
+void Object::setDamage(int damage)
+{
+	std::cout << health << std::endl;
+    health -= damage;
 }

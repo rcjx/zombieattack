@@ -4,9 +4,24 @@ Bullet::Bullet(sf::Sprite adjusted_sprite) {
   avatar = adjusted_sprite;
   speed *= 10;
   ignore = 1;
+  type = FRIEND;
+  health = 1;
+  attack = 1;
 }
 
 Bullet::~Bullet() {}
+
+Bullet::Bullet(Bullet &other)
+{
+	frame = other.frame;
+	frame_buffer = other.frame_buffer;
+	ignore = other.ignore;
+	type = other.type;
+	facingRight = other.facingRight;
+	facing = other.facing;
+	health = other.health;
+	attack = other.attack;
+}
 
 void Bullet::move(float ElapsedTime, std::vector<Object*> &objects, std::vector<int> possible, std::vector<Bullet*> &bullets, int me) 
 {

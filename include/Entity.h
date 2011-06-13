@@ -9,13 +9,11 @@ class Entity : public Object {
 
  public:
   Entity();
+  Entity(int x, int y, int level);
   ~Entity();
+  Entity(Entity &other);
 
-  virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible) {}
-
-protected:
-  int health;
-  int attack;
+  virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> &objects, std::vector<int> possible) {}
 };
 
 #endif

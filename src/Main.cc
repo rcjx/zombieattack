@@ -30,13 +30,14 @@ int main(int argc, char** argv)
 
 	objects.push_back(new Enemy(10, 10));
 
+	/*
 	objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
 	objects.push_back(new Enemy(10, SCREEN_HEIGHT - 100));
 	objects.push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100));
 	objects.push_back(new Enemy(100, 100));
 	objects.push_back(new Enemy(SCREEN_WIDTH - 100, 100));
 	objects.push_back(new Enemy(100, SCREEN_HEIGHT - 100));
-	
+*/
 
 	SpatialHash grid;
 
