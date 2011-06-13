@@ -24,12 +24,12 @@ class SpatialHash {
 
           
   //Sets up the hash for hashing, fires on every game turn
-  void setup(std::vector<Object*> objects);
+  void setup(std::vector<Object*> *objects);
         
   //Adds object into the hashtable
   void add(Object *object);
   std::vector<int> hashCodes(Object *object);
-  std::vector<Object*> getNearby(Object* subject);
+  std::vector<Object*>* getNearby(Object* subject);
 
   //Resets hash, hashing happens on every frame refresh
   void clear();

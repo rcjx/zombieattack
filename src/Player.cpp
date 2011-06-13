@@ -24,6 +24,8 @@ Player::Player() : Entity(80, 5) {
     exit(EXIT_FAILURE);
   }
   bullet_sprite.SetImage(bullet_pic);
+
+  bullets = new std::vector<Bullet*>();
 }
 
 Player::~Player() {
@@ -46,21 +48,21 @@ void Player::shoot(float running_time) {
       bullet_sprite.SetPosition(_x+_w/2, _y+_h + sprite_offset);
       Bullet *tmp = new Bullet(bullet_sprite);
       tmp->setFacing(DOWN);
-      bullets.push_back(tmp);
+      bullets->push_back(tmp);
       bullet_sprite.Rotate(180);
     }
     else if (facing == UP) {
       bullet_sprite.SetPosition(_x + _w/2, _y-sprite_offset);
       Bullet *tmp = new Bullet(bullet_sprite);
       tmp->setFacing(UP);
-      bullets.push_back(tmp);
+      bullets->push_back(tmp);
     }
     else if (facing == LEFT) {
       bullet_sprite.Rotate(90);
       bullet_sprite.SetPosition(_x-sprite_offset, _y + _h/2);
       Bullet *tmp = new Bullet(bullet_sprite);
       tmp->setFacing(LEFT);
-      bullets.push_back(tmp);
+      bullets->push_back(tmp);
       bullet_sprite.Rotate(270);
     }
     else if (facing == RIGHT) {
@@ -68,14 +70,10 @@ void Player::shoot(float running_time) {
       bullet_sprite.SetPosition(_x + _w + sprite_offset, _y + _h/2);
       Bullet *tmp = new Bullet(bullet_sprite);
       tmp->setFacing(RIGHT);
-      bullets.push_back(tmp);
+      bullets->push_back(tmp);
       bullet_sprite.Rotate(90);
 
     }
     last_shot = running_time;
   }
-}
-  
-std::vector<Bullet*> Player::getBullets() {
-  return bullets;
 }
