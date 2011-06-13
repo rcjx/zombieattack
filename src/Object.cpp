@@ -173,7 +173,6 @@ int* Object::collisions(std::vector<Object*> objects)
 	{
 		if(this != objects[i])
 		{
-			std::cout << "collision";
 			float other_x = objects[i]->getSprite().GetPosition().x + (objects[i]->getSprite().GetSize().x / 2);
 			float other_y = objects[i]->getSprite().GetPosition().y + (objects[i]->getSprite().GetSize().y / 2);
 
@@ -190,7 +189,6 @@ int* Object::collisions(std::vector<Object*> objects)
 					(_x > other_x ? open_sides[LEFT] = 0 : open_sides[RIGHT] = 0);
 			}	
 		}
-		std::cout << std::endl;
 	}	
     return open_sides;
 }
