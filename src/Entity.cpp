@@ -3,13 +3,8 @@
 
 #include "Entity.h"
 
-Entity::Entity(int hp, int atk) : Object() {
+Entity::Entity()
+{}
 
-  health = hp;
-  attack = atk;
-  
-}
-
-Entity::~Entity() {
-  delete this;
-}
+Entity::~Entity()
+{}

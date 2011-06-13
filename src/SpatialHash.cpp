@@ -11,7 +11,7 @@ SpatialHash::SpatialHash() {
   size = column * row;
 
   for(int i = 0; i < size; i++)
-    bucket.push_back(std::vector<Object*>()); 
+    bucket.push_back(std::vector<int>()); 
 }
 
 SpatialHash::~SpatialHash() {
@@ -21,10 +21,8 @@ SpatialHash::~SpatialHash() {
 //Sets up the hash for hashing, fires on every game turn
 void SpatialHash::setup(std::vector<Object*> objects) {              
   
-  for(unsigned int i = 0; i < objects.size(); i++)
-    add(objects[i]); //Adds position of object
-                
-  // std::cout << "hashtable size " << column * row << " std::vector size: " << bucket.size() << std::endl;
+	for(unsigned int i = 0; i < objects.size(); i++)
+		add(objects[i], i); //Adds position of object
 
   /*
    for(unsigned int i = 0; i < bucket.size(); i++) {
@@ -45,21 +43,12 @@ void SpatialHash::setup(std::vector<Object*> objects) {
 }
         
 //Adds object into the hashtable
-void SpatialHash::add(Object* object) {
+void SpatialHash::add(Object* object, int position) 
+{
+	std::vector<int> hash_codes = hashCodes(object);
 
-  std::vector<int> hash_codes = hashCodes(object);
-            
-  //std::cout << object << ": " << topleft << " " << topright << " AND "
-  //     << bottomleft << " " << bottomright << std::endl;       
-
-  /*
-  std::cout << hash_codes.size() << std::endl;
- for(unsigned int i = 0; i < hash_codes.size(); ++i)
-	  std::cout << "    " << hash_codes[i] << std::endl;
-	  */
-
-  for(unsigned int i = 0; i < hash_codes.size(); ++i)
-	  bucket[hash_codes[i]].push_back(object);
+	for(unsigned int i = 0; i < hash_codes.size(); ++i)
+		bucket[hash_codes[i]].push_back(position);
 }
 
 std::vector<int> SpatialHash::hashCodes(Object* object) {
@@ -69,16 +58,9 @@ std::vector<int> SpatialHash::hashCodes(Object* object) {
   int _w = object->getSprite().GetSize().x;
   int _h = object->getSprite().GetSize().y;
 
-  //Add top left corner
   int topleft = (int) (floor(_x / cellsize) + floor(_y / cellsize) * column);
-            
-  //Top right
   int topright = (int) (floor((_x + _w) / cellsize) + floor((_y) / cellsize) * column);
-             
-  //Bottom left
   int bottomleft = (int) (floor((_x) / cellsize) + floor((_y + _h) / cellsize) * column);
-    
-  //Bottom right
   int bottomright = (int) (floor((_x + _w) / cellsize) + floor((_y + _h) / cellsize) * column);
 
   std::vector<int> hash_codes;
@@ -93,25 +75,26 @@ std::vector<int> SpatialHash::hashCodes(Object* object) {
   
   return hash_codes;
 }
-std::vector<Object*> SpatialHash::getNearby(Object *subject) {
+std::vector<int> SpatialHash::getNearby(Object *subject) {
   
   std::vector<int> hash_codes = hashCodes(subject);
-  std::vector<Object*> nearby_objects; 
+  std::vector<int> nearby; 
 
-  for (unsigned int i = 0; i < hash_codes.size(); ++i)
-  {
-    nearby_objects.insert(nearby_objects.end(), bucket[hash_codes[i]].begin(),
- 			  bucket[hash_codes[i]].end());
-  }
+	for (unsigned int i = 0; i < hash_codes.size(); ++i)
+		for(unsigned int j = 0; j < bucket[hash_codes[i]].size(); ++j)
+			nearby.push_back(bucket[hash_codes[i]][j]);
 
-  return nearby_objects;
+	sort(nearby.begin(), nearby.end());
+	nearby.erase(unique(nearby.begin(), nearby.end()), nearby.end());
+
+    return nearby;
 }
 
 //Resets hash, hashing happens on every frame refresh
 void SpatialHash::clear() {
   bucket.clear();
   for(int i = 0; i < column * row; i++)
-    bucket.push_back(std::vector<Object*>()); 
+    bucket.push_back(std::vector<int>()); 
 }
         
 

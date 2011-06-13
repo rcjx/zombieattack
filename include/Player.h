@@ -11,6 +11,7 @@ class Player : public Entity {
  public:
   Player();
   ~Player();
+
   void shoot(float ElapsedTime);
   std::vector<Bullet*> bullets;
 

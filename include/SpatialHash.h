@@ -27,9 +27,9 @@ class SpatialHash {
   void setup(std::vector<Object*> objects);
         
   //Adds object into the hashtable
-  void add(Object *object);
+  void add(Object *object, int position);
   std::vector<int> hashCodes(Object *object);
-  std::vector<Object*> getNearby(Object* subject);
+  std::vector<int> getNearby(Object* subject);
 
   //Resets hash, hashing happens on every frame refresh
   void clear();
@@ -40,7 +40,7 @@ class SpatialHash {
   int row;
   int size;
   double cellsize;
-  std::vector<std::vector<Object*> > bucket;
+  std::vector<std::vector<int> > bucket;
 };
 
 #endif

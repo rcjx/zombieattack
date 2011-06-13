@@ -5,6 +5,7 @@
 
 Object::Object() {
     
+
   if (!down[0].LoadFromFile("../resources/sprites/JoeDown.jpg")) {
     std::cout << "Error loading image" << std::endl;
     exit(EXIT_FAILURE);
@@ -74,8 +75,6 @@ Object::Object() {
     for(unsigned int i = 0; i < 3; ++i)
 	    right[i].CreateMaskFromColor(sf::Color(255, 255, 255));
 	
-
-
   avatar.SetImage(down[0]);
   avatar.SetColor(sf::Color(255, 255, 255, 255));
   avatar.SetPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + std::rand()%100);
@@ -89,32 +88,33 @@ Object::Object() {
   speed = 75;
   frame = 0;
   frame_buffer = 0;
+  ignore = 0;
 }
 
 Object::~Object() {}
 
-void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects) 
+void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects, std::vector<int> possible) 
 {
 	int _x = this->getSprite().GetPosition().x;
 	int _y = this->getSprite().GetPosition().y;
 	int _w  = avatar.GetSize().x;
 	int _h = avatar.GetSize().y;
 
-	int *available = collisions(objects);
+	int *available = collisions(objects, possible);
 
 	float velocity = speed * ElapsedTime;
 
 	frame_buffer++;
-	if (frame_buffer%10 == 0) 
+	if(frame_buffer%10 == 0) 
 	{
 		frame++;
 		frame_buffer = 0;
 	}
 
-	if (frame == 3)
+	if(frame == 3)
 	    frame = 0;      
 
-	if (d == LEFT) 
+	if(d == LEFT) 
 	{
 		avatar.SetImage(left[frame]);
 		facing = LEFT;
@@ -122,7 +122,7 @@ void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects)
 		if (_x > 0 && available[LEFT])
 			avatar.Move(-velocity, 0);
 	}
-	else if (d == RIGHT) 
+	else if(d == RIGHT) 
 	{    
 		avatar.SetImage(right[frame]);
 		facing = RIGHT;
@@ -130,7 +130,7 @@ void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects)
 		if (_x + _w < SCREEN_WIDTH && available[RIGHT])
 			avatar.Move(velocity, 0);
 	}
-	else if (d == UP) 
+	else if(d == UP) 
 	{
 		avatar.SetImage(up[frame]);
 		facing = UP;
@@ -138,7 +138,7 @@ void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects)
 		if (_y > 0 && available[UP]) 
 			avatar.Move(0, -velocity);    
 	}
-	else if (d == DOWN) 
+	else if(d == DOWN) 
 	{
 		avatar.SetImage(down[frame]);
 		facing = DOWN;
@@ -160,26 +160,27 @@ void Object::setFacing(Direction d) {
   facing = d;
 }
 
-int* Object::collisions(std::vector<Object*> objects)
+int* Object::collisions(std::vector<Object*> objects, std::vector<int> possible)
 {
-	int *open_sides = new int[4];
+	int *open_sides = new int[4], position;
 	for(unsigned int i = 0; i < 4; ++i)
 		open_sides[i] = 1; //Declares all sides with no collision
 
 	float _x = avatar.GetPosition().x + (avatar.GetSize().x / 2);
 	float _y = avatar.GetPosition().y + (avatar.GetSize().y / 2);
 
-	for(unsigned int i = 0; i < objects.size(); ++i)
+	for(unsigned int i = 0; i < possible.size(); ++i)
 	{
-		if(this != objects[i])
+		position = possible[i];
+		if(this != objects[position])
 		{
-			float other_x = objects[i]->getSprite().GetPosition().x + (objects[i]->getSprite().GetSize().x / 2);
-			float other_y = objects[i]->getSprite().GetPosition().y + (objects[i]->getSprite().GetSize().y / 2);
+			float other_x = objects[position]->getSprite().GetPosition().x + (objects[position]->getSprite().GetSize().x / 2);
+			float other_y = objects[position]->getSprite().GetPosition().y + (objects[position]->getSprite().GetSize().y / 2);
 
 			float y = abs(_y - other_y);
-			y -= (objects[i]->getSprite().GetSize().y / 2) + (avatar.GetSize().y / 2);
+			y -= (objects[position]->getSprite().GetSize().y / 2) + (avatar.GetSize().y / 2);
 			float x = abs(_x - other_x);
-			x -= (objects[i]->getSprite().GetSize().x / 2) + (avatar.GetSize().x / 2);
+			x -= (objects[position]->getSprite().GetSize().x / 2) + (avatar.GetSize().x / 2);
 
 			if(y < 0 && x < 0)
 			{

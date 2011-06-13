@@ -2,44 +2,46 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy() : Entity(80, 5) {
-
+Enemy::Enemy()
+{
   speed *= 1;
   facingRight = true;
 }
 
-Enemy::Enemy(int x, int y) : Entity(80, 5) {
+Enemy::Enemy(int x, int y, int level)
+{
+    srand(time(NULL));
+
+    health = rand() % 5 + level;
 
   avatar.SetPosition(x, y); 
   speed *= 1;
   facingRight = true;
 }
 
-Enemy::~Enemy() {
-  delete this;
-}
+Enemy::~Enemy() {}
 
-void Enemy::aggro(Object &target, float ElapsedTime, std::vector<Object*> objects) {
+void Enemy::aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible) {
 
   if (avatar.GetPosition().x < target.getSprite().GetPosition().x) {
-    move(RIGHT, ElapsedTime, objects);
+    move(RIGHT, ElapsedTime, objects, possible);
     if (!facingRight) {
       avatar.FlipX(false);
       facingRight = true;
     }
   }
   if (avatar.GetPosition().x > target.getSprite().GetPosition().x) {
-    move(LEFT, ElapsedTime, objects);
+    move(LEFT, ElapsedTime, objects, possible);
     if (facingRight) {      
       avatar.FlipX(true);
       facingRight = false;
     }
   }
   if (avatar.GetPosition().y > target.getSprite().GetPosition().y) {
-    move(UP, ElapsedTime, objects);
+    move(UP, ElapsedTime, objects, possible);
   }
   if (avatar.GetPosition().y < target.getSprite().GetPosition().y)
-    move(DOWN, ElapsedTime, objects);
+    move(DOWN, ElapsedTime, objects, possible);
 
 }
 
