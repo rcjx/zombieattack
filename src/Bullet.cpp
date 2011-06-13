@@ -7,7 +7,7 @@ Bullet::Bullet(sf::Sprite adjusted_sprite) {
 
 Bullet::~Bullet() {}
 
-void Bullet::move(float ElapsedTime, std::vector<Object*> objects, std::vector<Bullet*> &bullets, int me) {
+void Bullet::move(float ElapsedTime, std::vector<Object*> &objects, std::vector<Bullet*> &bullets, int me) {
 
   int _x = this->getSprite().GetPosition().x;
   int _y = this->getSprite().GetPosition().y;
@@ -19,13 +19,13 @@ void Bullet::move(float ElapsedTime, std::vector<Object*> objects, std::vector<B
   if (facing == LEFT) {
     _x += -velocity;
     if (_x > 0 && !collisionDetected(objects)) 
-	{
+      {
       avatar.Move(-velocity, 0);
-    }
+      }
     else 
 	{
-		delete bullets[me];
-		bullets.erase(bullets.begin() + me);
+	  delete bullets[me];
+	  bullets.erase(bullets.begin() + me);
 	}
   }
   else if (facing == RIGHT) {    
@@ -67,7 +67,7 @@ void Bullet::move(float ElapsedTime, std::vector<Object*> objects, std::vector<B
 }
 
 
-bool Bullet::collisionDetected(std::vector<Object*> objects) {
+bool Bullet::collisionDetected(std::vector<Object*> &objects) {
 
   int _x = this->getSprite().GetPosition().x;
   int _y = this->getSprite().GetPosition().y;
@@ -93,8 +93,10 @@ bool Bullet::collisionDetected(std::vector<Object*> objects) {
 
       if ((bottom < subject_top) || (top >= subject_bottom) || (right < subject_left) || (left >= subject_right))
 	continue;
-      else
+      else {
+	objects[i]->takeDamage(1, objects, i);	
 	return true;
+      }
     }    
   } 
   return false;

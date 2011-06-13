@@ -4,19 +4,20 @@
 
 Enemy::Enemy() : Entity(80, 5) {
 
+  health = 2;
   speed *= 1;
   facingRight = true;
 }
 
 Enemy::Enemy(int x, int y) : Entity(80, 5) {
 
+  health = 2;
   avatar.SetPosition(x, y); 
   speed *= 1;
   facingRight = true;
 }
 
 Enemy::~Enemy() {
-  delete this;
 }
 
 void Enemy::aggro(Object &target, float ElapsedTime, std::vector<Object*> objects) {

@@ -13,8 +13,9 @@ class Entity : public Object {
   virtual void aggro(Object &target, float ElapsedTime,
 		     std::vector<Object*> objects)
 		     {  }
- 
- private:
+  void takeDamage(int dmg, std::vector<Object*> &objects, int me);
+  
+ protected:
   int health;
   int attack;
 };

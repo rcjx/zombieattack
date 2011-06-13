@@ -11,7 +11,7 @@ SpatialHash::SpatialHash() {
 
   size = column * row;
 
-  for(unsigned int i = 0; i < size; i++)
+  for(int i = 0; i < size; i++)
     bucket.push_back(std::vector<Object*>()); 
 }
 
@@ -111,13 +111,21 @@ std::vector<int> SpatialHash::hashCodes(Object* object) {
 std::vector<Object*> SpatialHash::getNearby(Object *subject) {
   
   std::vector<int> hash_codes = hashCodes(subject);
-  std::vector<Object*> nearby_objects; 
+  std::vector<Object*> nearby_objects;  
 
-  for (unsigned int i = 0; i < hash_codes.size(); ++i)
-  {
-    nearby_objects.insert(nearby_objects.end(), bucket[hash_codes[i]].begin(),
-			  bucket[hash_codes[i]].end());
+  for (unsigned int i = 0; i < hash_codes.size(); ++i) {
+    for (unsigned int j = 0; j < bucket[hash_codes[i]].size(); ++j) {
+      if (std::find(nearby_objects.begin(), nearby_objects.end(),
+		    bucket[hash_codes[i]][j])
+	  == nearby_objects.end()) {
+	nearby_objects.push_back(bucket[hash_codes[i]][j]);
+      }
+    }
   }
+				 
+  // nearby_objects.insert(nearby_objects.end(), bucket[hash_codes[i]].begin(),
+  //   			  bucket[hash_codes[i]].end());
+  // }
 
   return nearby_objects;
 }

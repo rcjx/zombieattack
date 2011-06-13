@@ -27,6 +27,7 @@ class Object {
   Direction getFacing();
   void setFacing(Direction d);
   int* collisions(std::vector<Object*> objects);
+  virtual void takeDamage(int dmg, std::vector<Object*> &objects, int me) {}
 
   protected:
   sf::Image up[3];

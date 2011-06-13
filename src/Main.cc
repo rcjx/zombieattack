@@ -47,8 +47,8 @@ int main(int argc, char** argv) {
 
   // Start game loop
   while (App.IsOpened()) {    
-
     grid.setup(objects);
+    
     // Process events
     sf::Event Event;
 
@@ -97,9 +97,11 @@ int main(int argc, char** argv) {
     }
 
     for(unsigned int i = 0; i < player->bullets.size(); ++i) {
+      std::vector<Object*> tmp = grid.getNearby(player->bullets[i]);
+      std::cout << "tmp size: " << tmp.size() << std::endl;
+      player->bullets[i]->move(ElapsedTime, tmp
+			       , player->bullets, i);
       App.Draw(player->bullets[i]->getSprite());
-      player->bullets[i]->move(ElapsedTime,
-			       grid.getNearby(player->bullets[i]), player->bullets, i);
     }
 
     // Diplay window contents on screen
