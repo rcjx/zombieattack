@@ -29,19 +29,19 @@ int main(int argc, char** argv) {
 
   Player *player = new Player; 
   //Object *thing = new Object;
-  std::vector<Object*> objects;
-  objects.push_back(player);
+  std::vector<Object*> *objects = new std::vector<Object*>;
+  objects->push_back(player);
   //objects.push_back(thing);
   //objects.push_back(new Enemy(SCREEN_WIDTH - 10, SCREEN_HEIGHT - 10));
-  objects.push_back(new Enemy(10, 10));
+  objects->push_back(new Enemy(10, 10));
 
   /*
-  objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
-  objects.push_back(new Enemy(10, SCREEN_HEIGHT - 100));
-  objects.push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100));
-  objects.push_back(new Enemy(100, 100));
-  objects.push_back(new Enemy(SCREEN_WIDTH - 100, 100));
-  objects.push_back(new Enemy(100, SCREEN_HEIGHT - 100));
+  objects->push_back(new Enemy(SCREEN_WIDTH - 10, 10));
+  objects->push_back(new Enemy(10, SCREEN_HEIGHT - 100));
+  objects->push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100));
+  objects->push_back(new Enemy(100, 100));
+  objects->push_back(new Enemy(SCREEN_WIDTH - 100, 100));
+  objects->push_back(new Enemy(100, SCREEN_HEIGHT - 100));
   */
 
   SpatialHash grid;
@@ -94,15 +94,15 @@ int main(int argc, char** argv) {
     App.Clear(sf::Color(255, 255, 255));
     // App.Draw(Rect);
     App.Draw(player->getSprite());
-    for (unsigned int i = 0; i < objects.size(); ++i)  {
-      objects[i]->aggro(*player, ElapsedTime, grid.getNearby(objects[i]));
-      App.Draw(objects[i]->getSprite());
+    for (unsigned int i = 0; i < objects->size(); ++i)  {
+      (*objects)[i]->aggro(*player, ElapsedTime, grid.getNearby((*objects)[i]));
+      App.Draw((*objects)[i]->getSprite());
     }
 
-    for(unsigned int i = 0; i < player->bullets.size(); ++i) {
-      App.Draw(player->bullets[i]->getSprite());
-      player->bullets[i]->move(ElapsedTime,
-			       grid.getNearby(player->bullets[i]), player->bullets, i);
+    for(unsigned int i = 0; i < player->bullets->size(); ++i) 
+	{
+      App.Draw(player->(*bullets)[i]->getSprite());
+      player->(*bullets)[i]->move(ElapsedTime, grid.getNearby(player->(*bullets)[i]), player->(*bullets), i);
     }
 
     // Diplay window contents on screen

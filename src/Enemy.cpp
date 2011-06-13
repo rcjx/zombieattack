@@ -19,7 +19,7 @@ Enemy::~Enemy() {
   delete this;
 }
 
-void Enemy::aggro(Object &target, float ElapsedTime, std::vector<Object*> objects) {
+void Enemy::aggro(Object &target, float ElapsedTime, std::vector<Object*> *objects) {
 
   if (avatar.GetPosition().x < target.getSprite().GetPosition().x) {
     move(RIGHT, ElapsedTime, objects);
@@ -40,6 +40,5 @@ void Enemy::aggro(Object &target, float ElapsedTime, std::vector<Object*> object
   }
   if (avatar.GetPosition().y < target.getSprite().GetPosition().y)
     move(DOWN, ElapsedTime, objects);
-
 }
 

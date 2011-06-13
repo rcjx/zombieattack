@@ -11,7 +11,7 @@ class Enemy : public Entity {
   Enemy();
   Enemy(int x, int y);
   ~Enemy();  
-  void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects);
+  void aggro(Object &target, float ElapsedTime, std::vector<Object*> *objects);
  private:
   int inventory;
 };

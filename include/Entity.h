@@ -10,9 +10,7 @@ class Entity : public Object {
  public:
   Entity(int hp, int atk);
   ~Entity();
-  virtual void aggro(Object &target, float ElapsedTime,
-		     std::vector<Object*> objects)
-		     {  }
+  virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> *objects) {}
  
  private:
   int health;

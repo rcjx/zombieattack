@@ -93,7 +93,7 @@ Object::Object() {
 
 Object::~Object() {}
 
-void Object::move(Direction d, float ElapsedTime, std::vector<Object*> objects) 
+void Object::move(Direction d, float ElapsedTime, std::vector<Object*> *objects) 
 {
 	int _x = this->getSprite().GetPosition().x;
 	int _y = this->getSprite().GetPosition().y;
@@ -160,7 +160,7 @@ void Object::setFacing(Direction d) {
   facing = d;
 }
 
-int* Object::collisions(std::vector<Object*> objects)
+int* Object::collisions(std::vector<Object*> *objects)
 {
 	int *open_sides = new int[4];
 	for(unsigned int i = 0; i < 4; ++i)
@@ -169,17 +169,17 @@ int* Object::collisions(std::vector<Object*> objects)
 	float _x = avatar.GetPosition().x + (avatar.GetSize().x / 2);
 	float _y = avatar.GetPosition().y + (avatar.GetSize().y / 2);
 
-	for(unsigned int i = 0; i < objects.size(); ++i)
+	for(unsigned int i = 0; i < objects->size(); ++i)
 	{
-		if(this != objects[i])
+		if(this != (*objects)[i])
 		{
-			float other_x = objects[i]->getSprite().GetPosition().x + (objects[i]->getSprite().GetSize().x / 2);
-			float other_y = objects[i]->getSprite().GetPosition().y + (objects[i]->getSprite().GetSize().y / 2);
+			float other_x = (*objects)[i]->getSprite().GetPosition().x + ((*objects)[i]->getSprite().GetSize().x / 2);
+			float other_y = (*objects)[i]->getSprite().GetPosition().y + ((*objects)[i]->getSprite().GetSize().y / 2);
 
 			float y = abs(_y - other_y);
-			y -= (objects[i]->getSprite().GetSize().y / 2) + (avatar.GetSize().y / 2);
+			y -= ((*objects)[i]->getSprite().GetSize().y / 2) + (avatar.GetSize().y / 2);
 			float x = abs(_x - other_x);
-			x -= (objects[i]->getSprite().GetSize().x / 2) + (avatar.GetSize().x / 2);
+			x -= ((*objects)[i]->getSprite().GetSize().x / 2) + (avatar.GetSize().x / 2);
 
 			if(y < 0 && x < 0)
 			{

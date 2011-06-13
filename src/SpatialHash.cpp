@@ -19,10 +19,10 @@ SpatialHash::~SpatialHash() {
 }
         
 //Sets up the hash for hashing, fires on every game turn
-void SpatialHash::setup(std::vector<Object*> objects) {              
+void SpatialHash::setup(std::vector<Object*> *objects) {              
   
-  for(unsigned int i = 0; i < objects.size(); i++)
-    add(objects[i]); //Adds position of object
+  for(unsigned int i = 0; i < objects->size(); i++)
+    add((*objects)[i]); //Adds position of object
                 
   // std::cout << "hashtable size " << column * row << " std::vector size: " << bucket.size() << std::endl;
 
@@ -93,14 +93,14 @@ std::vector<int> SpatialHash::hashCodes(Object* object) {
   
   return hash_codes;
 }
-std::vector<Object*> SpatialHash::getNearby(Object *subject) {
+std::vector<Object*>* SpatialHash::getNearby(Object *subject) {
   
   std::vector<int> hash_codes = hashCodes(subject);
-  std::vector<Object*> nearby_objects; 
+  std::vector<Object*> *nearby_objects = new std::vector<Object*>(); 
 
   for (unsigned int i = 0; i < hash_codes.size(); ++i)
   {
-    nearby_objects.insert(nearby_objects.end(), bucket[hash_codes[i]].begin(),
+    nearby_objects->insert(nearby_objects->end(), bucket[hash_codes[i]].begin(),
  			  bucket[hash_codes[i]].end());
   }
 
