@@ -7,7 +7,7 @@ Bullet::Bullet(sf::Sprite adjusted_sprite) {
 
 Bullet::~Bullet() {}
 
-void Bullet::move(float ElapsedTime, std::vector<Object*> objects, std::vector<Bullet*> &bullets, int me) {
+void Bullet::move(float ElapsedTime, std::vector<Object*> &objects, std::vector<Bullet*> &bullets, int me) {
 
   int _x = this->getSprite().GetPosition().x;
   int _y = this->getSprite().GetPosition().y;

@@ -93,7 +93,7 @@ Object::Object() {
 
 Object::~Object() {}
 
-void Object::move(Direction d, float ElapsedTime, std::vector<Object*> objects) 
+void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects) 
 {
 	int _x = this->getSprite().GetPosition().x;
 	int _y = this->getSprite().GetPosition().y;

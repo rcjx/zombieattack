@@ -20,10 +20,10 @@ class Object {
  public:
   Object();
   ~Object();
-  void move(Direction d, float ElapsedTime, std::vector<Object*> objects);
+  void move(Direction d, float ElapsedTime, std::vector<Object*> &objects);
   sf::Sprite getSprite();
-  virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects)
-		     { 	 }
+  virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects) {}
+
   Direction getFacing();
   void setFacing(Direction d);
   int* collisions(std::vector<Object*> objects);

@@ -36,12 +36,12 @@ int main(int argc, char** argv) {
   objects.push_back(new Enemy(10, 10));
 
   /*
-  objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
-  objects.push_back(new Enemy(10, SCREEN_HEIGHT - 100));
-  objects.push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100));
-  objects.push_back(new Enemy(100, 100));
-  objects.push_back(new Enemy(SCREEN_WIDTH - 100, 100));
-  objects.push_back(new Enemy(100, SCREEN_HEIGHT - 100));
+  objects->push_back(new Enemy(SCREEN_WIDTH - 10, 10));
+  objects->push_back(new Enemy(10, SCREEN_HEIGHT - 100));
+  objects->push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100));
+  objects->push_back(new Enemy(100, 100));
+  objects->push_back(new Enemy(SCREEN_WIDTH - 100, 100));
+  objects->push_back(new Enemy(100, SCREEN_HEIGHT - 100));
   */
 
   SpatialHash grid;
@@ -99,10 +99,12 @@ int main(int argc, char** argv) {
       App.Draw(objects[i]->getSprite());
     }
 
-    for(unsigned int i = 0; i < player->bullets.size(); ++i) {
+    for(unsigned int i = 0; i < player->bullets.size(); ++i) 
+	{
       App.Draw(player->bullets[i]->getSprite());
-      player->bullets[i]->move(ElapsedTime,
-			       grid.getNearby(player->bullets[i]), player->bullets, i);
+
+
+      player->bullets[i]->move(ElapsedTime, grid.getNearby(player->bullets[i]), player->bullets, i);
     }
 
     // Diplay window contents on screen

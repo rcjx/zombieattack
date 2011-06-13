@@ -75,7 +75,3 @@ void Player::shoot(float running_time) {
     last_shot = running_time;
   }
 }
-  
-std::vector<Bullet*> Player::getBullets() {
-  return bullets;
-}
