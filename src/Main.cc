@@ -16,6 +16,16 @@ int main(int argc, char** argv)
 
   App.SetFramerateLimit(60);
 
+  sf::Image BackgroundImage;
+  sf::Sprite BackgroundSprite;
+
+  if(!BackgroundImage.LoadFromFile("../resources/backgrounds/Floor.png"))
+    {
+      return EXIT_FAILURE;
+    }
+  BackgroundSprite.SetImage(BackgroundImage);
+		
+
   sf::Music bgm;    
   if (!bgm.OpenFromFile("../resources/music/cry_of_the_planet.ogg")) 
     {
@@ -122,6 +132,7 @@ int main(int argc, char** argv)
 
       //Clear the screen (fill it w/white color)
       App.Clear(sf::Color(255, 255, 255));
+      App.Draw(BackgroundSprite);
 
       std::stringstream s1, s2, s3;
       s1 << player->kills;

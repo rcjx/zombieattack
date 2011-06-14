@@ -54,13 +54,13 @@ Object::Object() {
   }
 
     for(unsigned int i = 0; i < 3; ++i)
-	    down[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+      down[i].CreateMaskFromColor(sf::Color(255, 255, 255));
     for(unsigned int i = 0; i < 3; ++i)
-	    up[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+      up[i].CreateMaskFromColor(sf::Color(255, 255, 255));
     for(unsigned int i = 0; i < 3; ++i)
-	    left[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+      left[i].CreateMaskFromColor(sf::Color(255, 255, 255));
     for(unsigned int i = 0; i < 3; ++i)
-	    right[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+      right[i].CreateMaskFromColor(sf::Color(255, 255, 255));
 	
   avatar.SetImage(down[0]);
   avatar.SetColor(sf::Color(255, 255, 255, 255));
@@ -82,57 +82,58 @@ Object::~Object() {}
 
 void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects, std::vector<int> possible) 
 {
-	int _x = this->getSprite().GetPosition().x;
-	int _y = this->getSprite().GetPosition().y;
-	int _w  = avatar.GetSize().x;
-	int _h = avatar.GetSize().y;
+  int _x = this->getSprite().GetPosition().x;
+  int _y = this->getSprite().GetPosition().y;
+  int _w  = avatar.GetSize().x;
+  int _h = avatar.GetSize().y;
 
-	int *available = collisions(objects, possible);
+  int *available = collisions(objects, possible);
 
-	float velocity = speed * ElapsedTime;
+  float velocity = speed * ElapsedTime;
 
-	frame_buffer++;
-	if(frame_buffer%10 == 0) 
-	{
-		frame++;
-		frame_buffer = 0;
-	}
+  frame_buffer++;
+  if(frame_buffer%10 == 0) 
+    {
+      frame++;
+      frame_buffer = 0;
+    }
 
-	if(frame == 3)
-	    frame = 0;      
+  std::cout << "facing: " << facing << std::endl;
+  if(frame == 3)
+    frame = 0;      
 
-	if(d == LEFT) 
-	{
-		avatar.SetImage(left[frame]);
-		facing = LEFT;
-		_x += -velocity;
-		if (_x > 0 && available[LEFT])
-			avatar.Move(-velocity, 0);
-	}
-	else if(d == RIGHT) 
-	{    
-		avatar.SetImage(right[frame]);
-		facing = RIGHT;
-		_x += velocity;
-		if (_x + _w < SCREEN_WIDTH && available[RIGHT])
-			avatar.Move(velocity, 0);
-	}
-	else if(d == UP) 
-	{
-		avatar.SetImage(up[frame]);
-		facing = UP;
-		_y += -velocity;
-		if (_y > 0 && available[UP]) 
-			avatar.Move(0, -velocity);    
-	}
-	else if(d == DOWN) 
-	{
-		avatar.SetImage(down[frame]);
-		facing = DOWN;
-		_y += velocity;
-		if (_y + _h < SCREEN_HEIGHT && available[DOWN])
-		    avatar.Move(0, velocity);
-	}  
+  if(d == LEFT) 
+    {
+      avatar.SetImage(left[frame]);
+      facing = LEFT;
+      _x += -velocity;
+      if (_x > 0 && available[LEFT])
+	avatar.Move(-velocity, 0);
+    }
+  else if(d == RIGHT) 
+    {    
+      avatar.SetImage(right[frame]);
+      facing = RIGHT;
+      _x += velocity;
+      if (_x + _w < SCREEN_WIDTH && available[RIGHT])
+	avatar.Move(velocity, 0);
+    }
+  else if(d == UP) 
+    {
+      avatar.SetImage(up[frame]);
+      facing = UP;
+      _y += -velocity;
+      if (_y > 0 && available[UP]) 
+	avatar.Move(0, -velocity);    
+    }
+  else if(d == DOWN) 
+    {
+      avatar.SetImage(down[frame]);
+      facing = DOWN;
+      _y += velocity;
+      if (_y + _h < SCREEN_HEIGHT && available[DOWN])
+	avatar.Move(0, velocity);
+    }  
 }
 
 sf::Sprite Object::getSprite() {

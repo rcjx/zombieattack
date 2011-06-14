@@ -4,7 +4,7 @@
 
 const float Player::SHOOT_DELAY = 0.25;
 
-Player::Player() : Entity(100000, 1) {
+Player::Player() : Entity(10000, 1) {
   
   type = FRIEND;
 
@@ -34,7 +34,6 @@ Player::Player() : Entity(100000, 1) {
     exit(EXIT_SUCCESS);
   }
   kills = 0;
-  health = 100;
 }
 
 Player::~Player() {}

@@ -83,6 +83,9 @@ Enemy::Enemy(int x, int y, int level) : Entity(level, level)
 
   last_time = 0.0;
   death_time = 0.0;
+  frame_buffer = 0;
+  facing = DOWN;
+
 }
 
 Enemy::~Enemy() {}
@@ -96,27 +99,38 @@ void Enemy::aggro(Object &target, float ElapsedTime, std::vector<Object*> object
     sound.Play();
     last_time = running_time;
   }
-    
-  if (avatar.GetPosition().x < target.getSprite().GetPosition().x) {
-    move(RIGHT, ElapsedTime, objects, possible);
-    if (!facingRight) {
-      avatar.FlipX(false);
-      facingRight = true;
-    }
-  }
-  if (avatar.GetPosition().x > target.getSprite().GetPosition().x) {
-    move(LEFT, ElapsedTime, objects, possible);
-    if (facingRight) {      
-      avatar.FlipX(true);
-      facingRight = false;
-    }
-  }
-  if (avatar.GetPosition().y > target.getSprite().GetPosition().y) {
-    move(UP, ElapsedTime, objects, possible);
-  }
-  if (avatar.GetPosition().y < target.getSprite().GetPosition().y)
-    move(DOWN, ElapsedTime, objects, possible);
 
+  std::srand(std::time(NULL));
+
+  if (rand() % 2) {
+    
+    if (avatar.GetPosition().x < target.getSprite().GetPosition().x) {
+      move(RIGHT, ElapsedTime, objects, possible);
+    }
+    else if (avatar.GetPosition().x > target.getSprite().GetPosition().x) {
+      move(LEFT, ElapsedTime, objects, possible);
+    }
+    if (avatar.GetPosition().y > target.getSprite().GetPosition().y) {
+      move(UP, ElapsedTime, objects, possible);
+    }
+    else if (avatar.GetPosition().y < target.getSprite().GetPosition().y)
+      move(DOWN, ElapsedTime, objects, possible);
+  }
+
+  else {
+    if (avatar.GetPosition().y > target.getSprite().GetPosition().y) {
+      move(UP, ElapsedTime, objects, possible);
+    }
+    else if (avatar.GetPosition().y < target.getSprite().GetPosition().y)
+      move(DOWN, ElapsedTime, objects, possible);
+    if (avatar.GetPosition().x < target.getSprite().GetPosition().x) {
+      move(RIGHT, ElapsedTime, objects, possible);
+    }
+    else if (avatar.GetPosition().x > target.getSprite().GetPosition().x) {
+      move(LEFT, ElapsedTime, objects, possible);
+    }
+  }
+    
 }
 
 void Enemy::takeDamage(std::vector<Object*> objects, int me, int damage) {
