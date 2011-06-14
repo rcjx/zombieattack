@@ -80,7 +80,7 @@ void Player::shoot(float running_time) {
     }
     sound.SetBuffer(gun_wav); 
     // sound.SetPitch(1.5f);
-    // sound.SetVolume(10.f);
+    sound.SetVolume(50.f);
     sound.Play();
     last_shot = running_time;
   }

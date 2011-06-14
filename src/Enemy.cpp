@@ -62,7 +62,7 @@ void Enemy::takeDamage(std::vector<Object*> objects, int me, int damage) {
 
   sound.SetBuffer(zombie_attacked_wav); 
   sound.SetPitch(1.5f);
-  sound.SetVolume(10.f);
+  sound.SetVolume(75.f);
   sound.Play();
   std::cout << health << " " << damage << std::endl;
   health -= damage;
