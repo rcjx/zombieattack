@@ -7,6 +7,65 @@ const float Enemy::DEATH_DELAY = 0.6;
 
 Enemy::Enemy(int x, int y, int level) : Entity(level, level)
 {
+  if (!down[0].LoadFromFile("../resources/sprites/MFront1.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!down[1].LoadFromFile("../resources/sprites/MFront2.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!down[2].LoadFromFile("../resources/sprites/MFront3.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!up[0].LoadFromFile("../resources/sprites/MBack1.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!up[1].LoadFromFile("../resources/sprites/MBack2.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!up[2].LoadFromFile("../resources/sprites/MBack3.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!right[0].LoadFromFile("../resources/sprites/MRight1.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!right[1].LoadFromFile("../resources/sprites/MRight2.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!right[2].LoadFromFile("../resources/sprites/MRight3.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!left[0].LoadFromFile("../resources/sprites/MLeft1.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!left[1].LoadFromFile("../resources/sprites/MLeft2.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  if (!left[2].LoadFromFile("../resources/sprites/MLeft3.png")) {
+    std::cout << "Error loading image" << std::endl;
+  }
+
+  for(unsigned int i = 0; i < 3; ++i)
+    down[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+  for(unsigned int i = 0; i < 3; ++i)
+    up[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+  for(unsigned int i = 0; i < 3; ++i)
+    left[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+  for(unsigned int i = 0; i < 3; ++i)
+    right[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+
+
+  avatar.SetImage(down[0]);
   avatar.SetPosition(x, y); 
   speed *= 1;
   facingRight = true;
