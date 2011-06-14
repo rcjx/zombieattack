@@ -66,7 +66,7 @@ int main(int argc, char** argv)
   //Start game loop
   while (App.IsOpened()) {
 
-    if (running_time - last_time > 5.0) {
+    if (running_time - last_time > 2.0) {
       objects.push_back(new Enemy(rand() % SCREEN_WIDTH,
 				  rand() % SCREEN_HEIGHT));
       last_time = running_time;
