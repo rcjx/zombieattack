@@ -43,21 +43,24 @@ int main(int argc, char** argv)
   SpatialHash grid;
 
   sf::Font MyFont;
-  //if (!MyFont.LoadFromFile("../resources/fonts/comics.ttf", 50)) {
-  //  std::cout << "Fail" << std::endl;
-  //  return EXIT_FAILURE;
-  //}
+  if (!MyFont.LoadFromFile("../resources/fonts/comics.ttf", 50)) {
+   std::cout << "Fail" << std::endl;
+   return EXIT_FAILURE;
+  }
 
-  //sf::String Hello;
-  
-  /*
-  Hello.SetFont(MyFont);
-  Hello.SetColor(sf::Color(255, 0, 0));
-  Hello.SetSize(75.f);
-  Hello.SetPosition(SCREEN_WIDTH/2 - Hello.GetSize()/2, 10.f);
-  //Hello.SetRotation(15.f);
-  */
+  sf::String Timer, KillCount;
     
+  Timer.SetFont(MyFont);
+  Timer.SetColor(sf::Color(0, 0, 255));
+  Timer.SetSize(75.f);
+  Timer.SetPosition(SCREEN_WIDTH/2 - Timer.GetSize()/2, 10.f);
+  //Timer.SetRotation(15.f);
+
+  KillCount.SetFont(MyFont);
+  KillCount.SetColor(sf::Color(255, 0, 0));
+  KillCount.SetSize(75.f);
+  KillCount.SetPosition(SCREEN_WIDTH - Timer.GetSize()/2, 10.f);
+  
   float running_time = 0.0;
   float last_time = 0.0;
 
@@ -115,13 +118,21 @@ int main(int argc, char** argv)
       //Clear the screen (fill it w/white color)
       App.Clear(sf::Color(255, 255, 255));
 
-      std::stringstream s;
-      s << (int)running_time;
+      std::stringstream s1, s2;
+      s1 << player->kills;
+      std::string kill_string;
+      s1 >> kill_string;
+
+      KillCount.SetText(kill_string);
+      App.Draw(KillCount);
+
+      s2 << (int)running_time;
       std::string time_string;
-      s >> time_string;
+      s2 >> time_string;
       
-//      Hello.SetText(time_string);
-  //    App.Draw(Hello);
+      Timer.SetText(time_string);
+      App.Draw(Timer);
+
       App.Draw(player->getSprite());
 
       for (unsigned int i = 0; i < objects.size(); ++i) {
@@ -135,8 +146,10 @@ int main(int argc, char** argv)
 	  player->bullets[i]->move(ElapsedTime, objects, grid.getNearby(player->bullets[i]), player->bullets, i);
 	}
 
-      for(unsigned int i = 0; i < objects.size(); ++i)
-	objects[i]->alive(objects, i, running_time);
+      for(unsigned int i = 0; i < objects.size(); ++i) {
+	if (!objects[i]->alive(objects, i, running_time))
+	  player->kills++;
+      }
 
       grid.clear();
 

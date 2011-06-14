@@ -16,7 +16,7 @@ Player::Player() : Entity(100000, 1) {
   speed *= 2;
   frame_buffer = 0;
   facing = DOWN;
-  last_shot = 0.0;
+  last_shot = 0.0;  
 
   if (!bullet_pic.LoadFromFile("../resources/sprites/bullet.png")) {
     std::cout << "Error loading image" << std::endl;
@@ -33,6 +33,7 @@ Player::Player() : Entity(100000, 1) {
     std::cout << "Error loading sfx" << std::endl; 
     exit(EXIT_SUCCESS);
   }
+  kills = 0;
 }
 
 Player::~Player() {}

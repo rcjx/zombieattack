@@ -78,6 +78,7 @@ bool Enemy::alive(std::vector<Object*> &objects, int me, float running_time)
       delete objects[me];
       objects.erase(objects.begin() + me);
       death_time = 0.0;
+      return false;
     }
     else if (death_time == 0.0) {
       sound.SetBuffer(zombie_attacked_wav); 

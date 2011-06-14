@@ -16,6 +16,7 @@ class Player : public Entity {
   std::vector<Bullet*> bullets;
   bool enemy(Object *subject);
   void takeDamage(std::vector<Object*> objects, int me, int damage);
+  int kills;
 
  private:
   int inventory;
