@@ -29,14 +29,14 @@ int main(int argc, char** argv)
 	objects.push_back(player);
 
 	objects.push_back(new Enemy(10, 10));
-/*
+
 	objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
 	objects.push_back(new Enemy(10, SCREEN_HEIGHT - 100));
 	objects.push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100));
 	objects.push_back(new Enemy(100, 100));
 	objects.push_back(new Enemy(SCREEN_WIDTH - 100, 100));
 	objects.push_back(new Enemy(100, SCREEN_HEIGHT - 100));
-	*/
+
 
 	SpatialHash grid;
 
@@ -73,7 +73,7 @@ int main(int argc, char** argv)
 		running_time += ElapsedTime;
 
 		if(App.GetInput().IsKeyDown(sf::Key::Space))
-		player->shoot(running_time);
+			player->shoot(running_time);
 
 		//Move the sprite
 		if(App.GetInput().IsKeyDown(sf::Key::Left))
@@ -103,7 +103,8 @@ int main(int argc, char** argv)
 
 		for(unsigned int i = 0; i < objects.size(); ++i)
 		{
-			std::cout << "[" << i << "] " << objects[i]->getHealth() << std::endl;
+			if(objects[i]->alive(objects, i))
+				std::cout << "someone died" << std::endl;
 		}
 
 		grid.clear();
