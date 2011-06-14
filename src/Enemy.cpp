@@ -140,7 +140,6 @@ void Enemy::takeDamage(std::vector<Object*> objects, int me, int damage) {
   sound.SetPitch(1.5f);
   sound.SetVolume(75.f);
   sound.Play();
-  //std::cout << health << " " << damage << std::endl;
   health -= damage;
 }
 

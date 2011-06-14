@@ -80,7 +80,6 @@ void Player::shoot(float running_time) {
       bullet_sprite.Rotate(90);
     }
     sound.SetBuffer(gun_wav); 
-    // sound.SetPitch(1.5f);
     sound.SetVolume(50.f);
     sound.Play();
     last_shot = running_time;
@@ -92,11 +91,9 @@ void Player::takeDamage(std::vector<Object*> objects, int me, int damage) {
 
   if (sound.GetStatus() != sf::Sound::Playing) {
     sound.SetBuffer(bite_wav); 
-    // sound.SetPitch(1.5f);
     sound.SetVolume(200.f);
     sound.Play();
   }
-  //std::cout << health << " " << damage << std::endl;
   health -= damage;
 }
 

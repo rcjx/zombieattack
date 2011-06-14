@@ -10,9 +10,10 @@
 #include "Player.h"
 #include "SpatialHash.h"
 
-int main(int argc, char** argv) 
-{
-  sf::RenderWindow App(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Zombie Attack");
+int main(int argc, char** argv) {
+
+  sf::RenderWindow App(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32),
+		       "Zombie Attack");
   
   App.SetFramerateLimit(60);
   bool game_over = false;
@@ -20,18 +21,17 @@ int main(int argc, char** argv)
   sf::Image BackgroundImage;
   sf::Sprite BackgroundSprite;
 
-  if(!BackgroundImage.LoadFromFile("../resources/backgrounds/Floor.png"))
-    {
-      return EXIT_FAILURE;
-    }
+  if(!BackgroundImage.LoadFromFile("../resources/backgrounds/Floor.png")) {
+    return EXIT_FAILURE;
+  }
   BackgroundSprite.SetImage(BackgroundImage);
 		
 
   sf::Music bgm;    
   if (!bgm.OpenFromFile("../resources/music/cry_of_the_planet.ogg")) {
     
-      std::cout << "Error loading music" << std::endl; 
-      exit(EXIT_SUCCESS);
+    std::cout << "Error loading music" << std::endl; 
+    exit(EXIT_SUCCESS);
   }
 
   bgm.Play();
@@ -41,22 +41,12 @@ int main(int argc, char** argv)
   Player *player = new Player; 
   objects.push_back(player);
 
-  // objects.push_back(new Enemy(10, 10));
-
-  // objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
-  // objects.push_back(new Enemy(10, SCREEN_HEIGHT - 100));
-  // objects.push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100));
-  // objects.push_back(new Enemy(100, 100));
-  // objects.push_back(new Enemy(SCREEN_WIDTH - 100, 100));
-  // objects.push_back(new Enemy(100, SCREEN_HEIGHT - 100));
-
-
   SpatialHash grid;
 
   sf::Font MyFont;
   if (!MyFont.LoadFromFile("../resources/fonts/comics.ttf", 50)) {
-   std::cout << "Fail" << std::endl;
-   return EXIT_FAILURE;
+    std::cout << "Fail" << std::endl;
+    return EXIT_FAILURE;
   }
 
   sf::String Timer, KillCount, HP, GameOverString, Score;
@@ -65,7 +55,6 @@ int main(int argc, char** argv)
   Timer.SetColor(sf::Color(0, 0, 255));
   Timer.SetSize(50.f);
   Timer.SetPosition(SCREEN_WIDTH/2 - Timer.GetSize()/2 - 75, 10.f);
-  //Timer.SetRotation(15.f);
 
   KillCount.SetFont(MyFont);
   KillCount.SetColor(sf::Color(255, 0, 0));
@@ -75,7 +64,7 @@ int main(int argc, char** argv)
   HP.SetFont(MyFont);
   HP.SetColor(sf::Color(0, 255, 0));
   HP.SetSize(50.f);
-  HP.SetPosition(0., 10.f);
+  HP.SetPosition(25.f, 10.f);
   
   float running_time = 0.0;
   float last_time = 0.0;
@@ -89,7 +78,7 @@ int main(int argc, char** argv)
   while (App.IsOpened()) {
 
     //Process events
-      sf::Event Event;
+    sf::Event Event;
 
     //Window closed
     while (App.GetEvent(Event)) 
@@ -102,8 +91,8 @@ int main(int argc, char** argv)
 	   (Event.Key.Code == sf::Key::Escape))	
 	  App.Close();
 
-	if(Event.Key.Code == sf::Key::F1) 
-	  {
+	if(Event.Key.Code == sf::Key::F1) {
+
 	    sf::Image Screen = App.Capture();
 	    Screen.SaveToFile("../screenshots/screenshot.jpg");
 	  }      
@@ -144,8 +133,6 @@ int main(int argc, char** argv)
       if(App.GetInput().IsKeyDown(sf::Key::Down))
 	player->move(DOWN, ElapsedTime, objects, grid.getNearby(player));
 
-      //Clear the screen (fill it w/white color)
-      //App.Clear(sf::Color(255, 255, 255));
       App.Draw(BackgroundSprite);
 
       std::stringstream s1, s2, s3, s4;
@@ -216,27 +203,30 @@ int main(int argc, char** argv)
 	GameOverString.SetFont(MyFont);
 	GameOverString.SetColor(sf::Color(255, 255, 0));
 	GameOverString.SetSize(100.f);
-	GameOverString.SetPosition(SCREEN_WIDTH/2 - GameOverString.GetSize()/2 - 225, SCREEN_HEIGHT/2 - 200);
-	//GameOverString.SetRotation(15.f);
+	GameOverString.SetPosition(SCREEN_WIDTH/2 -
+				   GameOverString.GetSize()/2 - 225,
+				   SCREEN_HEIGHT/2 - 200);
 
 	GameOverString.SetText("Game Over");
 
 	Timer.SetFont(MyFont);
 	Timer.SetColor(sf::Color(255, 255, 0));
 	Timer.SetSize(50.f);
-	Timer.SetPosition(SCREEN_WIDTH/2 - Timer.GetSize()/2 - 75, SCREEN_HEIGHT/2);
-	//Timer.SetRotation(15.f);
+	Timer.SetPosition(SCREEN_WIDTH/2 - Timer.GetSize()/2 - 75,
+			  SCREEN_HEIGHT/2);
 
 	KillCount.SetFont(MyFont);
 	KillCount.SetColor(sf::Color(255, 255, 0));
 	KillCount.SetSize(50.f);
-	KillCount.SetPosition(SCREEN_WIDTH/2 - KillCount.GetSize()/2 - 80, SCREEN_HEIGHT/2 + 100);
+	KillCount.SetPosition(SCREEN_WIDTH/2 - KillCount.GetSize()/2 - 80,
+			      SCREEN_HEIGHT/2 + 100);
 
 	Score.SetFont(MyFont);
 	Score.SetColor(sf::Color(255, 255, 0));
 	Score.SetSize(50.f);
 	
-	Score.SetPosition(SCREEN_WIDTH/2 - KillCount.GetSize()/2 - 80, SCREEN_HEIGHT/2 + 200);
+	Score.SetPosition(SCREEN_WIDTH/2 - KillCount.GetSize()/2 - 80,
+			  SCREEN_HEIGHT/2 + 200);
 
 	if (!bgm.OpenFromFile("../resources/music/previously_lost.mp3")) {
     

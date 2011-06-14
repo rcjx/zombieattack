@@ -53,14 +53,14 @@ Object::Object() {
     std::cout << "Error loading image" << std::endl;
   }
 
-    for(unsigned int i = 0; i < 3; ++i)
-      down[i].CreateMaskFromColor(sf::Color(255, 255, 255));
-    for(unsigned int i = 0; i < 3; ++i)
-      up[i].CreateMaskFromColor(sf::Color(255, 255, 255));
-    for(unsigned int i = 0; i < 3; ++i)
-      left[i].CreateMaskFromColor(sf::Color(255, 255, 255));
-    for(unsigned int i = 0; i < 3; ++i)
-      right[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+  for(unsigned int i = 0; i < 3; ++i)
+    down[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+  for(unsigned int i = 0; i < 3; ++i)
+    up[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+  for(unsigned int i = 0; i < 3; ++i)
+    left[i].CreateMaskFromColor(sf::Color(255, 255, 255));
+  for(unsigned int i = 0; i < 3; ++i)
+    right[i].CreateMaskFromColor(sf::Color(255, 255, 255));
 	
   avatar.SetImage(down[0]);
   avatar.SetColor(sf::Color(255, 255, 255, 255));
@@ -186,25 +186,25 @@ int* Object::collisions(std::vector<Object*> objects, std::vector<int> possible)
 
 Type Object::getType()
 {
-    return type;
+  return type;
 }
 
 bool Object::enemy(Object *subject)
 {
-    return false;
+  return false;
 }
 
 int Object::getAttack()
 {
-	return 0;
+  return 0;
 }
 
 int Object::getHealth()
 {
-	return 0;
+  return 0;
 }
 
 bool Object::alive(std::vector<Object*> &objects, int me, float death_time)
 {
-    return true;
+  return true;
 }
