@@ -99,7 +99,7 @@ int main(int argc, char** argv)
 	  if(Event.Key.Code == sf::Key::F1) 
 	    {
 	      sf::Image Screen = App.Capture();
-	      Screen.SaveToFile("screenshot.jpg");
+	      Screen.SaveToFile("../screenshots/screenshot.jpg");
 	    }      
 	}
 
