@@ -96,7 +96,7 @@ void Player::takeDamage(std::vector<Object*> objects, int me, int damage) {
     // sound.SetVolume(10.f);
     sound.Play();
   }
-  std::cout << health << " " << damage << std::endl;
+  //std::cout << health << " " << damage << std::endl;
   health -= damage;
 }
 

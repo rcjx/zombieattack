@@ -21,7 +21,7 @@ bool Entity::enemy(Object *subject)
 
 void Entity::takeDamage(std::vector<Object*> objects, int me, int damage) {
   
-  std::cout << health << " " << damage << std::endl;
+  //std::cout << health << " " << damage << std::endl;
   health -= damage;
 }
 

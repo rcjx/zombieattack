@@ -98,7 +98,6 @@ void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects,
       frame_buffer = 0;
     }
 
-  std::cout << "facing: " << facing << std::endl;
   if(frame == 3)
     frame = 0;      
 
@@ -107,7 +106,7 @@ void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects,
       avatar.SetImage(left[frame]);
       facing = LEFT;
       _x += -velocity;
-      if (_x > 0 && available[LEFT])
+      if (_x > 50 && available[LEFT])
 	avatar.Move(-velocity, 0);
     }
   else if(d == RIGHT) 
@@ -115,7 +114,7 @@ void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects,
       avatar.SetImage(right[frame]);
       facing = RIGHT;
       _x += velocity;
-      if (_x + _w < SCREEN_WIDTH && available[RIGHT])
+      if (_x + _w < GAME_WIDTH && available[RIGHT])
 	avatar.Move(velocity, 0);
     }
   else if(d == UP) 
@@ -123,7 +122,7 @@ void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects,
       avatar.SetImage(up[frame]);
       facing = UP;
       _y += -velocity;
-      if (_y > 0 && available[UP]) 
+      if (_y > 50 && available[UP]) 
 	avatar.Move(0, -velocity);    
     }
   else if(d == DOWN) 
@@ -131,7 +130,7 @@ void Object::move(Direction d, float ElapsedTime, std::vector<Object*> &objects,
       avatar.SetImage(down[frame]);
       facing = DOWN;
       _y += velocity;
-      if (_y + _h < SCREEN_HEIGHT && available[DOWN])
+      if (_y + _h < GAME_HEIGHT && available[DOWN])
 	avatar.Move(0, velocity);
     }  
 }

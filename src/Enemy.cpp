@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #include "Enemy.h"
 
@@ -102,7 +103,7 @@ void Enemy::aggro(Object &target, float ElapsedTime, std::vector<Object*> object
 
   std::srand(std::time(NULL));
 
-  if (rand() % 2) {
+  if (std::abs(avatar.GetPosition().y - target.getSprite().GetPosition().y) > 40) {
     
     if (avatar.GetPosition().x < target.getSprite().GetPosition().x) {
       move(RIGHT, ElapsedTime, objects, possible);
@@ -139,7 +140,7 @@ void Enemy::takeDamage(std::vector<Object*> objects, int me, int damage) {
   sound.SetPitch(1.5f);
   sound.SetVolume(75.f);
   sound.Play();
-  std::cout << health << " " << damage << std::endl;
+  //std::cout << health << " " << damage << std::endl;
   health -= damage;
 }
 
