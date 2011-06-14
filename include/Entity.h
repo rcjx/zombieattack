@@ -14,7 +14,7 @@ class Entity : public Object {
   virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible) {}
   virtual bool enemy(Object *subject);
 	
-    bool alive(std::vector<Object*> &objects, int me);
+    void alive(std::vector<Object*> &objects, int me);
     void takeDamage(std::vector<Object*> objects, int me, int damage);
 	int getAttack();
 	int getHealth();

@@ -215,8 +215,3 @@ int Object::getHealth()
 {
 	return 0;
 }
-
-bool Object::alive(std::vector<Object*> &objects, int me)
-{
-    return true;
-}

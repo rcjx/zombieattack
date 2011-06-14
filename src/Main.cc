@@ -102,10 +102,7 @@ int main(int argc, char** argv)
 		}
 
 		for(unsigned int i = 0; i < objects.size(); ++i)
-		{
-			if(objects[i]->alive(objects, i))
-				std::cout << "someone died" << std::endl;
-		}
+			objects[i]->alive(objects, i);
 
 		grid.clear();
 

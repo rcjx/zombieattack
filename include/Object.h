@@ -30,13 +30,15 @@ class Object {
 
 		virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible) {}
 		virtual void takeDamage(std::vector<Object*> objects, int me, int damage) {}
-		virtual bool alive(std::vector<Object*> &objects, int me);
+		virtual void alive(std::vector<Object*> &objects, int me) {}
 		virtual bool enemy(Object *subject);
 		virtual int getAttack();
 		virtual int getHealth();
+
+	virtual int* collisions(std::vector<Object*> objects, std::vector<int> possible);
 		
 		void move(Direction d, float ElapsedTime, std::vector<Object*> &objects, std::vector<int> possible);
-		int* collisions(std::vector<Object*> objects, std::vector<int> possible);
+		
 
 		Type getType();
 		sf::Sprite getSprite();
