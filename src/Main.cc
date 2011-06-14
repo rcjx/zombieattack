@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <time.h>
 
 #include "Enemy.h"
 #include "Player.h"
@@ -58,9 +59,18 @@ int main(int argc, char** argv)
   */
     
   float running_time = 0.0;
+  float last_time = 0.0;
+
+  std::srand(std::time(NULL));
 
   //Start game loop
   while (App.IsOpened()) {
+
+    if (running_time - last_time > 5.0) {
+      objects.push_back(new Enemy(rand() % SCREEN_WIDTH,
+				  rand() % SCREEN_HEIGHT));
+      last_time = running_time;
+    }
 
       grid.setup(objects);
 
