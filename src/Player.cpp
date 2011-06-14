@@ -4,7 +4,7 @@
 
 const float Player::SHOOT_DELAY = 0.25;
 
-Player::Player()
+Player::Player() : Entity(100000, 1)
 {
 	type = FRIEND;
 
@@ -67,7 +67,6 @@ void Player::shoot(float running_time) {
       tmp->setFacing(RIGHT);
       bullets.push_back(tmp);
       bullet_sprite.Rotate(90);
-
     }
     last_shot = running_time;
   }
