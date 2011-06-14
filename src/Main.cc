@@ -48,18 +48,23 @@ int main(int argc, char** argv)
    return EXIT_FAILURE;
   }
 
-  sf::String Timer, KillCount;
+  sf::String Timer, KillCount, HP;
     
   Timer.SetFont(MyFont);
   Timer.SetColor(sf::Color(0, 0, 255));
-  Timer.SetSize(75.f);
-  Timer.SetPosition(SCREEN_WIDTH/2 - Timer.GetSize()/2, 10.f);
+  Timer.SetSize(50.f);
+  Timer.SetPosition(SCREEN_WIDTH/2 - Timer.GetSize()/2 - 50, 10.f);
   //Timer.SetRotation(15.f);
 
   KillCount.SetFont(MyFont);
   KillCount.SetColor(sf::Color(255, 0, 0));
-  KillCount.SetSize(75.f);
-  KillCount.SetPosition(SCREEN_WIDTH - Timer.GetSize()/2, 10.f);
+  KillCount.SetSize(50.f);
+  KillCount.SetPosition(SCREEN_WIDTH - 200.f, 10.f);
+
+  HP.SetFont(MyFont);
+  HP.SetColor(sf::Color(0, 255, 0));
+  HP.SetSize(50.f);
+  HP.SetPosition(0., 10.f);
   
   float running_time = 0.0;
   float last_time = 0.0;
@@ -118,20 +123,27 @@ int main(int argc, char** argv)
       //Clear the screen (fill it w/white color)
       App.Clear(sf::Color(255, 255, 255));
 
-      std::stringstream s1, s2;
+      std::stringstream s1, s2, s3;
       s1 << player->kills;
       std::string kill_string;
-      s1 >> kill_string;
+      s1 >> kill_string;   
 
-      KillCount.SetText(kill_string);
+      KillCount.SetText("Kills: " + kill_string);
       App.Draw(KillCount);
 
       s2 << (int)running_time;
       std::string time_string;
-      s2 >> time_string;
-      
-      Timer.SetText(time_string);
+      s2 >> time_string;      
+
+      Timer.SetText("Time: " + time_string);
       App.Draw(Timer);
+      
+      s3 << player->getHealth();
+      std::string hp_string;
+      s3 >> hp_string;
+      
+      HP.SetText("HP: " + hp_string);
+      App.Draw(HP);
 
       App.Draw(player->getSprite());
 

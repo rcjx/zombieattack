@@ -34,6 +34,7 @@ Player::Player() : Entity(100000, 1) {
     exit(EXIT_SUCCESS);
   }
   kills = 0;
+  health = 100;
 }
 
 Player::~Player() {}

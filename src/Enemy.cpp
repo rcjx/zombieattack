@@ -77,7 +77,6 @@ bool Enemy::alive(std::vector<Object*> &objects, int me, float running_time)
     if (running_time - death_time > DEATH_DELAY && death_time != 0.0) {
       delete objects[me];
       objects.erase(objects.begin() + me);
-      death_time = 0.0;
       return false;
     }
     else if (death_time == 0.0) {
