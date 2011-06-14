@@ -13,9 +13,7 @@
 int main(int argc, char** argv) 
 {
   sf::RenderWindow App(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Zombie Attack");
-
-    sf::RenderWindow GameOver(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Zombie Attack");
-
+  
   App.SetFramerateLimit(60);
   bool game_over = false;
 
