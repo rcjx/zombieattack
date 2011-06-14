@@ -108,8 +108,8 @@ int main(int argc, char** argv) {
       if (running_time - last_time > 2.0) {
 	for (int i = 0; i < spawn_rate; i++) {
 
-	  objects.push_back(new Enemy(rand() % (SCREEN_WIDTH-100) + 50,
-				      rand() % (SCREEN_HEIGHT-100) + 50));
+	  objects.push_back(new Enemy(rand() % (SCREEN_WIDTH-100) + 40,
+				      rand() % (SCREEN_HEIGHT-100) + 40));
 	}
 	last_time = running_time;
       }
