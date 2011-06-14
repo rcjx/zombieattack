@@ -1,7 +1,7 @@
-#include "Object.h"
+#include "Entity.h"
 #include <iostream>
 
-class Bullet : public Object {
+class Bullet : public Entity {
 
  public:
   Bullet(sf::Sprite adjusted_sprite);

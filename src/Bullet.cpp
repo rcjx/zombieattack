@@ -1,9 +1,11 @@
 #include "Bullet.h"
 
-Bullet::Bullet(sf::Sprite adjusted_sprite) {
+Bullet::Bullet(sf::Sprite adjusted_sprite) : Entity(1, 1)
+{
   avatar = adjusted_sprite;
   speed *= 10;
   ignore = 1;
+  type = FRIEND;
 }
 
 Bullet::~Bullet() {}

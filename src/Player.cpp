@@ -6,6 +6,8 @@ const float Player::SHOOT_DELAY = 0.25;
 
 Player::Player()
 {
+	type = FRIEND;
+
   int _x = SCREEN_WIDTH/2-avatar.GetSize().x/2;
   int _y = SCREEN_HEIGHT/2-avatar.GetSize().y/2;
   
@@ -23,9 +25,7 @@ Player::Player()
   bullet_sprite.SetImage(bullet_pic);
 }
 
-Player::~Player() {
-  delete this;
-}
+Player::~Player() {}
 
 void Player::shoot(float running_time) {
 
@@ -71,4 +71,9 @@ void Player::shoot(float running_time) {
     }
     last_shot = running_time;
   }
+}
+
+bool Player::enemy(Object *subject)
+{
+    return false;
 }

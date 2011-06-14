@@ -14,6 +14,12 @@ enum Direction {
 	DOWN
 };
 
+enum Type
+{
+    FRIEND,
+	FOE
+};
+
 class Object {
 
 	friend class SpatialHash;
@@ -22,10 +28,15 @@ class Object {
 		Object();
 		~Object();
 
+		virtual void takeDamage(std::vector<Object*> objects, int me, int damage) {}
+		virtual bool enemy(Object *subject);
+		virtual int getAttack();
+		virtual int getHealth();
 		virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible) {}
 		void move(Direction d, float ElapsedTime, std::vector<Object*> &objects, std::vector<int> possible);
 		int* collisions(std::vector<Object*> objects, std::vector<int> possible);
 
+		Type getType();
 		sf::Sprite getSprite();
 		Direction getFacing();
 		void setFacing(Direction d);
@@ -41,9 +52,10 @@ class Object {
 		int frame_buffer;
 		int ignore;
 
+		Type type;
+
 		bool facingRight;
 		Direction facing;
-
 };
 
 #endif

@@ -29,14 +29,14 @@ int main(int argc, char** argv)
 	objects.push_back(player);
 
 	objects.push_back(new Enemy(10, 10));
-
+/*
 	objects.push_back(new Enemy(SCREEN_WIDTH - 10, 10));
 	objects.push_back(new Enemy(10, SCREEN_HEIGHT - 100));
 	objects.push_back(new Enemy(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100));
 	objects.push_back(new Enemy(100, 100));
 	objects.push_back(new Enemy(SCREEN_WIDTH - 100, 100));
 	objects.push_back(new Enemy(100, SCREEN_HEIGHT - 100));
-	
+	*/
 
 	SpatialHash grid;
 
@@ -99,6 +99,11 @@ int main(int argc, char** argv)
 		{
 			App.Draw(player->bullets[i]->getSprite());
 			player->bullets[i]->move(ElapsedTime, objects, grid.getNearby(player->bullets[i]), player->bullets, i);
+		}
+
+		for(unsigned int i = 0; i < objects.size(); ++i)
+		{
+			std::cout << "[" << i << "] " << objects[i]->getHealth() << std::endl;
 		}
 
 		grid.clear();

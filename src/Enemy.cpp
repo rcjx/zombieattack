@@ -2,21 +2,12 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy()
+Enemy::Enemy(int x, int y, int level) : Entity(level, level)
 {
-  speed *= 1;
-  facingRight = true;
-}
-
-Enemy::Enemy(int x, int y, int level)
-{
-    srand(time(NULL));
-
-    health = rand() % 5 + level;
-
   avatar.SetPosition(x, y); 
   speed *= 1;
   facingRight = true;
+  type = FOE;
 }
 
 Enemy::~Enemy() {}

@@ -5,7 +5,6 @@
 
 Object::Object() {
     
-
   if (!down[0].LoadFromFile("../resources/sprites/JoeDown.jpg")) {
     std::cout << "Error loading image" << std::endl;
     exit(EXIT_FAILURE);
@@ -188,8 +187,31 @@ int* Object::collisions(std::vector<Object*> objects, std::vector<int> possible)
 				    (_y > other_y ? open_sides[UP] = 0 : open_sides[DOWN] = 0);  
 				if(x >= y)
 					(_x > other_x ? open_sides[LEFT] = 0 : open_sides[RIGHT] = 0);
+				if(enemy(objects[position]))
+				    objects[position]->takeDamage(objects, position, getAttack());
+				
 			}	
 		}
 	}	
     return open_sides;
+}
+
+Type Object::getType()
+{
+    return type;
+}
+
+bool Object::enemy(Object *subject)
+{
+    return false;
+}
+
+int Object::getAttack()
+{
+	return 0;
+}
+
+int Object::getHealth()
+{
+	return 0;
 }

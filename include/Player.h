@@ -14,6 +14,7 @@ class Player : public Entity {
 
   void shoot(float ElapsedTime);
   std::vector<Bullet*> bullets;
+  bool enemy(Object *subject);
 
  private:
   int inventory;
