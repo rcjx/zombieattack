@@ -6,7 +6,7 @@
 Entity::Entity(int hp, int atk) : Object()
 {
     health = hp;
-	attack = atk;
+    attack = atk;
 }
 
 Entity::~Entity()
@@ -19,10 +19,10 @@ bool Entity::enemy(Object *subject)
 	return false;
 }
 
-void Entity::takeDamage(std::vector<Object*> objects, int me, int damage)
-{
-	std::cout << health << " " << damage << std::endl;
-    health -= damage;
+void Entity::takeDamage(std::vector<Object*> objects, int me, int damage) {
+  
+  std::cout << health << " " << damage << std::endl;
+  health -= damage;
 }
 
 int Entity::getAttack()

@@ -4,9 +4,9 @@
 
 const float Player::SHOOT_DELAY = 0.25;
 
-Player::Player() : Entity(100000, 1)
-{
-	type = FRIEND;
+Player::Player() : Entity(100000, 1) {
+  
+  type = FRIEND;
 
   int _x = SCREEN_WIDTH/2-avatar.GetSize().x/2;
   int _y = SCREEN_HEIGHT/2-avatar.GetSize().y/2;
@@ -23,6 +23,16 @@ Player::Player() : Entity(100000, 1)
     exit(EXIT_FAILURE);
   }
   bullet_sprite.SetImage(bullet_pic);
+
+  if (!bite_wav.LoadFromFile("../resources/sfx/bite.wav")) {
+    std::cout << "Error loading sfx" << std::endl; 
+    exit(EXIT_SUCCESS);
+  }
+
+  if (!gun_wav.LoadFromFile("../resources/sfx/gun.wav")) {
+    std::cout << "Error loading sfx" << std::endl; 
+    exit(EXIT_SUCCESS);
+  }
 }
 
 Player::~Player() {}
@@ -68,8 +78,25 @@ void Player::shoot(float running_time) {
       bullets.push_back(tmp);
       bullet_sprite.Rotate(90);
     }
+    sound.SetBuffer(gun_wav); 
+    // sound.SetPitch(1.5f);
+    // sound.SetVolume(10.f);
+    sound.Play();
     last_shot = running_time;
   }
+}
+
+
+void Player::takeDamage(std::vector<Object*> objects, int me, int damage) {
+
+  if (sound.GetStatus() != sf::Sound::Playing) {
+    sound.SetBuffer(bite_wav); 
+    // sound.SetPitch(1.5f);
+    // sound.SetVolume(10.f);
+    sound.Play();
+  }
+  std::cout << health << " " << damage << std::endl;
+  health -= damage;
 }
 
 bool Player::enemy(Object *subject)

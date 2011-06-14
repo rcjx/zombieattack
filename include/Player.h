@@ -15,11 +15,14 @@ class Player : public Entity {
   void shoot(float ElapsedTime);
   std::vector<Bullet*> bullets;
   bool enemy(Object *subject);
+  void takeDamage(std::vector<Object*> objects, int me, int damage);
 
  private:
   int inventory;
   sf::Image bullet_pic;
   sf::Sprite bullet_sprite;
+  sf::SoundBuffer bite_wav;
+  sf::SoundBuffer gun_wav;
   float last_shot;
   static const float SHOOT_DELAY;
 };

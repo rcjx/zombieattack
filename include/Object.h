@@ -2,6 +2,7 @@
 #define OBJECT_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
 
@@ -28,7 +29,7 @@ class Object {
 		Object();
 		~Object();
 
-		virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible) {}
+		virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible, float running_time) {}
 		virtual void takeDamage(std::vector<Object*> objects, int me, int damage) {}
 		virtual bool alive(std::vector<Object*> &objects, int me);
 		virtual bool enemy(Object *subject);
@@ -58,6 +59,7 @@ class Object {
 
 		bool facingRight;
 		Direction facing;
+		sf::Sound sound;
 };
 
 #endif

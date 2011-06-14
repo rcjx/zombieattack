@@ -52,7 +52,7 @@ int main(int argc, char** argv)
   Hello.SetFont(MyFont);
   Hello.SetColor(sf::Color(255, 0, 0));
   Hello.SetSize(75.f);
-  Hello.SetPosition(SCREEN_WIDTH/2 - Hello.GetSize()/5, 10.f);
+  Hello.SetPosition(SCREEN_WIDTH/2 - Hello.GetSize()/2, 10.f);
   //Hello.SetRotation(15.f);
     
   float running_time = 0.0;
@@ -107,7 +107,6 @@ int main(int argc, char** argv)
       s << (int)running_time;
       std::string time_string;
       s >> time_string;
-      std::cout << time_string << std::endl;
       
       Hello.SetText(time_string);
       App.Draw(Hello);
@@ -115,20 +114,13 @@ int main(int argc, char** argv)
 
       for (unsigned int i = 0; i < objects.size(); ++i)  
 	{
-	  objects[i]->aggro(*player, ElapsedTime, objects, grid.getNearby(objects[i]));
+	  objects[i]->aggro(*player, ElapsedTime, objects, grid.getNearby(objects[i]), running_time);
 	  App.Draw(objects[i]->getSprite());
 	}
 
-      for(unsigned int i = 0; i < player->bullets.size(); ++i) 
-	{
+      for(unsigned int i = 0; i < player->bullets.size(); ++i) {
 	  App.Draw(player->bullets[i]->getSprite());
 	  player->bullets[i]->move(ElapsedTime, objects, grid.getNearby(player->bullets[i]), player->bullets, i);
-	}
-
-      for(unsigned int i = 0; i < objects.size(); ++i)
-	{
-	  if(objects[i]->alive(objects, i))
-	    std::cout << "someone died" << std::endl;
 	}
 
       grid.clear();
