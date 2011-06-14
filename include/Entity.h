@@ -8,15 +8,19 @@
 class Entity : public Object {
 
  public:
-  Entity(int hp, int atk);
+  Entity(int hp = 0, int atk = 0);
   ~Entity();
-  virtual void aggro(Object &target, float ElapsedTime,
-		     std::vector<Object*> objects)
-		     {  }
- 
- private:
-  int health;
-  int attack;
+
+  virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible) {}
+  virtual bool enemy(Object *subject);
+
+    void takeDamage(std::vector<Object*> objects, int me, int damage);
+	int getAttack();
+	int getHealth();
+
+protected:
+    int health;
+    int attack;
 };
 
 #endif

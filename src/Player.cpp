@@ -4,13 +4,12 @@
 
 const float Player::SHOOT_DELAY = 0.25;
 
-Player::Player() : Entity(80, 5) {
+Player::Player()
+{
+	type = FRIEND;
 
   int _x = SCREEN_WIDTH/2-avatar.GetSize().x/2;
   int _y = SCREEN_HEIGHT/2-avatar.GetSize().y/2;
-
-  // int _x = 50;
-  // int _y = 50;
   
   avatar.SetPosition(_x, _y);
 		     
@@ -26,9 +25,7 @@ Player::Player() : Entity(80, 5) {
   bullet_sprite.SetImage(bullet_pic);
 }
 
-Player::~Player() {
-  delete this;
-}
+Player::~Player() {}
 
 void Player::shoot(float running_time) {
 
@@ -75,7 +72,8 @@ void Player::shoot(float running_time) {
     last_shot = running_time;
   }
 }
-  
-std::vector<Bullet*> Player::getBullets() {
-  return bullets;
+
+bool Player::enemy(Object *subject)
+{
+    return false;
 }

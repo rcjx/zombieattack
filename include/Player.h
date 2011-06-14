@@ -11,9 +11,10 @@ class Player : public Entity {
  public:
   Player();
   ~Player();
+
   void shoot(float ElapsedTime);
-  std::vector<Bullet*> getBullets();  
   std::vector<Bullet*> bullets;
+  bool enemy(Object *subject);
 
  private:
   int inventory;
@@ -21,7 +22,6 @@ class Player : public Entity {
   sf::Sprite bullet_sprite;
   float last_shot;
   static const float SHOOT_DELAY;
-  //std::vector<Bullet*> bullets;  
 };
 
 #endif
