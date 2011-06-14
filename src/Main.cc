@@ -67,8 +67,8 @@ int main(int argc, char** argv)
   while (App.IsOpened()) {
 
     if (running_time - last_time > 2.0) {
-      objects.push_back(new Enemy(rand() % SCREEN_WIDTH,
-				  rand() % SCREEN_HEIGHT));
+      objects.push_back(new Enemy(rand() % SCREEN_WIDTH - 10,
+				  rand() % SCREEN_HEIGHT - 10));
       last_time = running_time;
     }
 
