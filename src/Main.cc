@@ -42,18 +42,20 @@ int main(int argc, char** argv)
   SpatialHash grid;
 
   sf::Font MyFont;
-  if (!MyFont.LoadFromFile("../resources/fonts/comics.ttf", 50)) {
-    std::cout << "Fail" << std::endl;
-    return EXIT_FAILURE;
-  }
+  //if (!MyFont.LoadFromFile("../resources/fonts/comics.ttf", 50)) {
+  //  std::cout << "Fail" << std::endl;
+  //  return EXIT_FAILURE;
+  //}
 
-  sf::String Hello;
+  //sf::String Hello;
   
+  /*
   Hello.SetFont(MyFont);
   Hello.SetColor(sf::Color(255, 0, 0));
   Hello.SetSize(75.f);
   Hello.SetPosition(SCREEN_WIDTH/2 - Hello.GetSize()/2, 10.f);
   //Hello.SetRotation(15.f);
+  */
     
   float running_time = 0.0;
 
@@ -108,8 +110,8 @@ int main(int argc, char** argv)
       std::string time_string;
       s >> time_string;
       
-      Hello.SetText(time_string);
-      App.Draw(Hello);
+//      Hello.SetText(time_string);
+  //    App.Draw(Hello);
       App.Draw(player->getSprite());
 
       for (unsigned int i = 0; i < objects.size(); ++i)  
@@ -122,6 +124,9 @@ int main(int argc, char** argv)
 	  App.Draw(player->bullets[i]->getSprite());
 	  player->bullets[i]->move(ElapsedTime, objects, grid.getNearby(player->bullets[i]), player->bullets, i);
 	}
+
+		for(unsigned int i = 0; i < objects.size(); ++i)
+		    objects[i]->alive(objects, i);
 
       grid.clear();
 

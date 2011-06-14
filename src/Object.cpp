@@ -5,64 +5,52 @@
 
 Object::Object() {
     
-  if (!down[0].LoadFromFile("../resources/sprites/JoeDown.jpg")) {
+  if (!down[0].LoadFromFile("../resources/sprites/PFront1.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!down[1].LoadFromFile("../resources/sprites/JoeDownWalk1.jpg")) {
+  if (!down[1].LoadFromFile("../resources/sprites/PFront2.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!down[2].LoadFromFile("../resources/sprites/JoeDownWalk2.jpg")) {
+  if (!down[2].LoadFromFile("../resources/sprites/PFront3.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!up[0].LoadFromFile("../resources/sprites/JoeUp.jpg")) {
+  if (!up[0].LoadFromFile("../resources/sprites/PBack1.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!up[1].LoadFromFile("../resources/sprites/JoeUpWalk1.jpg")) {
+  if (!up[1].LoadFromFile("../resources/sprites/PBack2.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!up[2].LoadFromFile("../resources/sprites/JoeUpWalk2.jpg")) {
+  if (!up[2].LoadFromFile("../resources/sprites/PBack3.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!right[0].LoadFromFile("../resources/sprites/JoeRight.jpg")) {
+  if (!right[0].LoadFromFile("../resources/sprites/PRight1.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!right[1].LoadFromFile("../resources/sprites/JoeRightWalk1.jpg")) {
+  if (!right[1].LoadFromFile("../resources/sprites/PRight2.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!right[2].LoadFromFile("../resources/sprites/JoeRightWalk2.jpg")) {
+  if (!right[2].LoadFromFile("../resources/sprites/PRight3.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!left[0].LoadFromFile("../resources/sprites/JoeLeft.jpg")) {
+  if (!left[0].LoadFromFile("../resources/sprites/PLeft1.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!left[1].LoadFromFile("../resources/sprites/JoeLeftWalk1.jpg")) {
+  if (!left[1].LoadFromFile("../resources/sprites/PLeft2.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
-  if (!left[2].LoadFromFile("../resources/sprites/JoeLeftWalk2.jpg")) {
+  if (!left[2].LoadFromFile("../resources/sprites/PLeft3.png")) {
     std::cout << "Error loading image" << std::endl;
-    exit(EXIT_FAILURE);
   }
 
     for(unsigned int i = 0; i < 3; ++i)
