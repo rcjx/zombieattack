@@ -16,8 +16,8 @@ class Entity : public Object {
 	
     bool alive(std::vector<Object*> &objects, int me);
     void takeDamage(std::vector<Object*> objects, int me, int damage);
-	int getAttack();
-	int getHealth();
+    int getAttack();
+    int getHealth();
 
 protected:
     int health;

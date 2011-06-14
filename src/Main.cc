@@ -114,8 +114,8 @@ int main(int argc, char** argv)
   //    App.Draw(Hello);
       App.Draw(player->getSprite());
 
-      for (unsigned int i = 0; i < objects.size(); ++i)  
-	{
+      for (unsigned int i = 0; i < objects.size(); ++i) {
+
 	  objects[i]->aggro(*player, ElapsedTime, objects, grid.getNearby(objects[i]), running_time);
 	  App.Draw(objects[i]->getSprite());
 	}
@@ -125,8 +125,8 @@ int main(int argc, char** argv)
 	  player->bullets[i]->move(ElapsedTime, objects, grid.getNearby(player->bullets[i]), player->bullets, i);
 	}
 
-		for(unsigned int i = 0; i < objects.size(); ++i)
-		    objects[i]->alive(objects, i);
+      for(unsigned int i = 0; i < objects.size(); ++i)
+	objects[i]->alive(objects, i, running_time);
 
       grid.clear();
 

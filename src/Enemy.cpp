@@ -3,6 +3,7 @@
 #include "Enemy.h"
 
 const float Enemy::SFX_DELAY = 10.0;
+const float Enemy::DEATH_DELAY = 0.6;
 
 Enemy::Enemy(int x, int y, int level) : Entity(level, level)
 {
@@ -22,6 +23,7 @@ Enemy::Enemy(int x, int y, int level) : Entity(level, level)
   }
 
   last_time = 0.0;
+  death_time = 0.0;
 }
 
 Enemy::~Enemy() {}
@@ -67,3 +69,28 @@ void Enemy::takeDamage(std::vector<Object*> objects, int me, int damage) {
   std::cout << health << " " << damage << std::endl;
   health -= damage;
 }
+
+bool Enemy::alive(std::vector<Object*> &objects, int me, float running_time)
+{
+
+  if(health <= 0) {
+    if (running_time - death_time > DEATH_DELAY && death_time != 0.0) {
+      delete objects[me];
+      objects.erase(objects.begin() + me);
+      death_time = 0.0;
+    }
+    else if (death_time == 0.0) {
+      sound.SetBuffer(zombie_attacked_wav); 
+      sound.SetPitch(1.5f);
+      sound.SetVolume(75.f);
+      sound.Play();
+      death_time = running_time;
+    }
+    else
+      speed /= 2.;
+  }
+  return true;
+}
+
+
+

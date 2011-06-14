@@ -37,10 +37,10 @@ int Entity::getHealth()
 
 bool Entity::alive(std::vector<Object*> &objects, int me)
 {
-    if(health <= 0)
-	{
-	    delete objects[me];
-		objects.erase(objects.begin() + me);
-	}
-	return true;
+  if(health <= 0)
+    {
+      delete objects[me];
+      objects.erase(objects.begin() + me);
+    }
+    return true;
 }

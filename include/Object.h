@@ -23,18 +23,18 @@ enum Type
 
 class Object {
 
-	friend class SpatialHash;
+  friend class SpatialHash;
 
-	public:
-		Object();
-		~Object();
+ public:
+  Object();
+  ~Object();
 
-		virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible, float running_time) {}
-		virtual void takeDamage(std::vector<Object*> objects, int me, int damage) {}
-		virtual bool alive(std::vector<Object*> &objects, int me);
-		virtual bool enemy(Object *subject);
-		virtual int getAttack();
-		virtual int getHealth();
+  virtual void aggro(Object &target, float ElapsedTime, std::vector<Object*> objects, std::vector<int> possible, float running_time) {}
+  virtual void takeDamage(std::vector<Object*> objects, int me, int damage) {}
+  virtual bool alive(std::vector<Object*> &objects, int me, float running_time);
+  virtual bool enemy(Object *subject);
+  virtual int getAttack();
+  virtual int getHealth();
 		
 		void move(Direction d, float ElapsedTime, std::vector<Object*> &objects, std::vector<int> possible);
 		int* collisions(std::vector<Object*> objects, std::vector<int> possible);
@@ -50,7 +50,7 @@ class Object {
 		sf::Image left[3];
 		sf::Image right[3];
 		sf::Sprite avatar;
-		int speed;
+		float speed;
 		int frame;
 		int frame_buffer;
 		int ignore;
